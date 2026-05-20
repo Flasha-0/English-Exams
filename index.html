@@ -1,0 +1,1898 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>امتحانات جامعة سوهاج التفاعلية</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+/* ===== RESET & BASE ===== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --primary:#0A2C52;
+  --primary-light:#0d3a6e;
+  --primary-dark:#061d38;
+  --gold:#D4AF37;
+  --gold-light:#e8cb5d;
+  --gold-dark:#b8941e;
+  --green:#1a7a4a;
+  --green-bg:#e8f5ee;
+  --red:#c0392b;
+  --red-bg:#fdecea;
+  --gray:#f4f6f9;
+  --gray-dark:#6c757d;
+  --white:#ffffff;
+  --border:#dee2e6;
+  --shadow:0 4px 20px rgba(10,44,82,0.12);
+  --radius:12px;
+  --radius-sm:8px;
+  --transition:all 0.3s ease;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+  background:var(--gray);
+  color:#2c3e50;
+  line-height:1.7;
+  direction:rtl;
+}
+a{color:inherit;text-decoration:none}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:var(--gray)}
+::-webkit-scrollbar-thumb{background:var(--primary);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:var(--gold)}
+
+/* ===== HEADER ===== */
+#main-header{
+  background:linear-gradient(135deg,var(--primary-dark) 0%,var(--primary) 50%,var(--primary-light) 100%);
+  color:var(--white);
+  padding:0;
+  position:sticky;
+  top:0;
+  z-index:1000;
+  box-shadow:0 2px 20px rgba(0,0,0,0.3);
+}
+.header-top{
+  padding:18px 24px 12px;
+  text-align:center;
+  border-bottom:2px solid rgba(212,175,55,0.3);
+  position:relative;
+}
+.header-top::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;bottom:0;
+  background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23D4AF37' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  pointer-events:none;
+}
+.site-logo{
+  font-size:clamp(1.6rem,4vw,2.4rem);
+  font-weight:900;
+  color:var(--gold);
+  text-shadow:2px 2px 8px rgba(0,0,0,0.4);
+  letter-spacing:2px;
+  font-family:'Georgia',serif;
+  position:relative;
+}
+.site-logo span{
+  display:inline-block;
+  animation:shimmer 3s ease-in-out infinite;
+}
+@keyframes shimmer{
+  0%,100%{color:var(--gold)}
+  50%{color:var(--gold-light);text-shadow:0 0 20px rgba(212,175,55,0.8),2px 2px 8px rgba(0,0,0,0.4)}
+}
+.site-subtitle{
+  font-size:0.9rem;
+  color:rgba(255,255,255,0.75);
+  margin-top:4px;
+  letter-spacing:1px;
+}
+.header-nav{
+  padding:10px 24px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+.nav-btn{
+  background:rgba(255,255,255,0.1);
+  border:1px solid rgba(212,175,55,0.4);
+  color:var(--white);
+  padding:8px 16px;
+  border-radius:20px;
+  cursor:pointer;
+  font-size:0.82rem;
+  font-family:inherit;
+  transition:var(--transition);
+  display:flex;
+  align-items:center;
+  gap:6px;
+  white-space:nowrap;
+}
+.nav-btn:hover{
+  background:var(--gold);
+  color:var(--primary-dark);
+  border-color:var(--gold);
+  transform:translateY(-2px);
+}
+.nav-btn.active{
+  background:var(--gold);
+  color:var(--primary-dark);
+  border-color:var(--gold);
+}
+.nav-btn i{font-size:0.9rem}
+
+/* ===== KEYBOARD SHORTCUTS HINT ===== */
+#shortcuts-hint{
+  background:rgba(212,175,55,0.1);
+  border-top:1px solid rgba(212,175,55,0.2);
+  padding:6px 24px;
+  text-align:center;
+  font-size:0.75rem;
+  color:rgba(255,255,255,0.6);
+  display:none;
+}
+.kbd{
+  background:rgba(255,255,255,0.15);
+  border:1px solid rgba(255,255,255,0.3);
+  border-radius:4px;
+  padding:1px 6px;
+  font-family:monospace;
+  font-size:0.75rem;
+  color:var(--gold-light);
+}
+
+/* ===== GLOBAL SCORE BAR ===== */
+#global-score-bar{
+  background:var(--white);
+  border-bottom:2px solid var(--border);
+  padding:10px 24px;
+  display:flex;
+  align-items:center;
+  gap:16px;
+  flex-wrap:wrap;
+  justify-content:center;
+  box-shadow:0 2px 8px rgba(0,0,0,0.06);
+}
+.global-score-item{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-size:0.85rem;
+  color:var(--gray-dark);
+}
+.global-score-item strong{color:var(--primary);font-size:1rem}
+
+/* ===== REVIEW PANEL ===== */
+#review-panel{
+  background:var(--white);
+  border:2px solid var(--gold);
+  border-radius:var(--radius);
+  margin:16px 24px;
+  padding:16px;
+  display:none;
+}
+#review-panel h3{
+  color:var(--primary);
+  margin-bottom:12px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.review-list{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+.review-chip{
+  background:rgba(212,175,55,0.15);
+  border:1px solid var(--gold);
+  border-radius:20px;
+  padding:4px 12px;
+  font-size:0.8rem;
+  cursor:pointer;
+  transition:var(--transition);
+  color:var(--primary);
+}
+.review-chip:hover{
+  background:var(--gold);
+  color:var(--white);
+}
+
+/* ===== MAIN CONTENT ===== */
+#content{
+  max-width:1100px;
+  margin:0 auto;
+  padding:20px 16px 60px;
+}
+
+/* ===== EXAM CARD ===== */
+.exam-card{
+  background:var(--white);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  margin-bottom:32px;
+  overflow:hidden;
+  border:1px solid var(--border);
+  transition:var(--transition);
+}
+.exam-card:hover{box-shadow:0 8px 32px rgba(10,44,82,0.18)}
+
+/* ===== EXAM HEADER ===== */
+.exam-header{
+  background:linear-gradient(135deg,var(--primary) 0%,var(--primary-light) 100%);
+  color:var(--white);
+  padding:20px 24px;
+  position:relative;
+  overflow:hidden;
+}
+.exam-header::after{
+  content:'';
+  position:absolute;
+  bottom:-30px;right:-30px;
+  width:120px;height:120px;
+  background:rgba(212,175,55,0.1);
+  border-radius:50%;
+}
+.exam-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  background:var(--gold);
+  color:var(--primary-dark);
+  padding:4px 14px;
+  border-radius:20px;
+  font-size:0.8rem;
+  font-weight:700;
+  margin-bottom:10px;
+}
+.exam-header-text{
+  font-size:0.88rem;
+  line-height:1.8;
+  white-space:pre-line;
+  opacity:0.92;
+}
+.exam-title-row{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.exam-controls-top{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+.btn-icon{
+  background:rgba(255,255,255,0.15);
+  border:1px solid rgba(255,255,255,0.3);
+  color:var(--white);
+  width:36px;height:36px;
+  border-radius:8px;
+  cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:var(--transition);
+  font-size:0.9rem;
+}
+.btn-icon:hover{background:var(--gold);color:var(--primary-dark);border-color:var(--gold)}
+.btn-icon.active{background:var(--gold);color:var(--primary-dark);border-color:var(--gold)}
+
+/* ===== PROGRESS BAR ===== */
+.progress-wrap{
+  padding:12px 24px;
+  background:rgba(10,44,82,0.03);
+  border-bottom:1px solid var(--border);
+}
+.progress-info{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:6px;
+  font-size:0.82rem;
+  color:var(--gray-dark);
+}
+.progress-bar-outer{
+  background:var(--border);
+  border-radius:10px;
+  height:8px;
+  overflow:hidden;
+}
+.progress-bar-inner{
+  background:linear-gradient(90deg,var(--gold) 0%,var(--gold-light) 100%);
+  height:100%;
+  border-radius:10px;
+  transition:width 0.5s ease;
+}
+
+/* ===== PASSAGE ===== */
+.passage-wrap{
+  padding:20px 24px;
+  border-bottom:2px solid var(--border);
+}
+.passage-title{
+  color:var(--primary);
+  font-size:1rem;
+  font-weight:700;
+  margin-bottom:12px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.passage-title i{color:var(--gold)}
+.passage-text{
+  background:linear-gradient(135deg,rgba(10,44,82,0.03) 0%,rgba(212,175,55,0.05) 100%);
+  border:1px solid rgba(10,44,82,0.1);
+  border-right:4px solid var(--gold);
+  border-radius:var(--radius-sm);
+  padding:16px 20px;
+  font-size:0.9rem;
+  line-height:1.9;
+  direction:ltr;
+  text-align:left;
+}
+.passage-text p{margin-bottom:12px}
+.passage-text p:last-child{margin-bottom:0}
+.highlight-word{
+  background:linear-gradient(135deg,rgba(212,175,55,0.25),rgba(212,175,55,0.4));
+  color:var(--gold-dark);
+  font-weight:700;
+  padding:1px 4px;
+  border-radius:4px;
+  border-bottom:2px solid var(--gold);
+}
+
+/* ===== SECTION ===== */
+.section-wrap{padding:0 24px}
+.section-title{
+  color:var(--primary-dark);
+  font-size:1rem;
+  font-weight:700;
+  padding:16px 0 12px;
+  border-bottom:2px solid rgba(10,44,82,0.08);
+  margin-bottom:16px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.section-title i{color:var(--gold)}
+
+/* ===== QUESTION ITEM ===== */
+.question-item{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  margin-bottom:16px;
+  overflow:hidden;
+  transition:var(--transition);
+  position:relative;
+}
+.question-item:hover{border-color:rgba(10,44,82,0.3);box-shadow:0 2px 12px rgba(10,44,82,0.08)}
+.question-item.correct-q{border-color:var(--green);background:var(--green-bg)}
+.question-item.wrong-q{border-color:var(--red);background:var(--red-bg)}
+.question-item.hidden-q{display:none}
+
+.question-top{
+  padding:14px 16px 10px;
+  display:flex;
+  align-items:flex-start;
+  gap:12px;
+}
+.question-num{
+  background:var(--primary);
+  color:var(--white);
+  min-width:32px;height:32px;
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.82rem;
+  font-weight:700;
+  flex-shrink:0;
+}
+.question-text-wrap{flex:1}
+.question-text{
+  font-size:0.92rem;
+  font-weight:600;
+  color:var(--primary-dark);
+  direction:ltr;
+  text-align:left;
+  line-height:1.6;
+}
+.question-actions{
+  display:flex;
+  gap:6px;
+  flex-shrink:0;
+  align-items:flex-start;
+}
+.btn-unsure{
+  background:none;
+  border:1px solid var(--border);
+  border-radius:6px;
+  cursor:pointer;
+  padding:4px 8px;
+  font-size:0.75rem;
+  color:var(--gray-dark);
+  transition:var(--transition);
+  display:flex;
+  align-items:center;
+  gap:4px;
+  white-space:nowrap;
+}
+.btn-unsure:hover{border-color:var(--gold);color:var(--gold-dark)}
+.btn-unsure.marked{
+  background:rgba(212,175,55,0.15);
+  border-color:var(--gold);
+  color:var(--gold-dark);
+}
+.btn-unsure.marked i{color:var(--gold)}
+
+/* ===== OPTIONS ===== */
+.options-wrap{padding:4px 16px 14px 16px}
+.option-item{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:9px 12px;
+  border-radius:8px;
+  margin-bottom:6px;
+  cursor:pointer;
+  border:1.5px solid var(--border);
+  transition:var(--transition);
+  direction:ltr;
+  text-align:left;
+}
+.option-item:hover{border-color:var(--primary);background:rgba(10,44,82,0.03)}
+.option-item.selected{border-color:var(--primary);background:rgba(10,44,82,0.07)}
+.option-item.correct-opt{border-color:var(--green)!important;background:var(--green-bg)!important}
+.option-item.wrong-opt{border-color:var(--red)!important;background:var(--red-bg)!important}
+.option-item input[type="radio"]{
+  accent-color:var(--primary);
+  width:16px;height:16px;
+  cursor:pointer;
+  flex-shrink:0;
+}
+.option-letter{
+  background:var(--primary);
+  color:var(--white);
+  width:24px;height:24px;
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.75rem;
+  font-weight:700;
+  flex-shrink:0;
+}
+.option-item.correct-opt .option-letter{background:var(--green)}
+.option-item.wrong-opt .option-letter{background:var(--red)}
+.option-text{font-size:0.88rem;flex:1}
+
+/* ===== TRUE/FALSE ===== */
+.tf-wrap{
+  padding:4px 16px 14px;
+  display:flex;
+  align-items:flex-start;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.tf-statement{
+  direction:ltr;
+  text-align:left;
+  font-size:0.88rem;
+  color:#444;
+  flex:1;
+  min-width:200px;
+  padding-top:4px;
+}
+.tf-btns{
+  display:flex;
+  gap:8px;
+  flex-shrink:0;
+}
+.btn-tf{
+  padding:8px 20px;
+  border-radius:8px;
+  border:2px solid var(--border);
+  cursor:pointer;
+  font-size:0.85rem;
+  font-weight:700;
+  font-family:inherit;
+  transition:var(--transition);
+  background:var(--white);
+}
+.btn-tf.true-btn:hover,.btn-tf.true-btn.selected{
+  background:rgba(26,122,74,0.1);
+  border-color:var(--green);
+  color:var(--green);
+}
+.btn-tf.false-btn:hover,.btn-tf.false-btn.selected{
+  background:rgba(192,57,43,0.1);
+  border-color:var(--red);
+  color:var(--red);
+}
+.btn-tf.correct-tf{background:var(--green)!important;border-color:var(--green)!important;color:var(--white)!important}
+.btn-tf.wrong-tf{background:var(--red)!important;border-color:var(--red)!important;color:var(--white)!important}
+
+/* ===== FILL IN BLANK ===== */
+.fib-wrap{padding:4px 16px 14px}
+.fib-sentence{
+  direction:ltr;
+  text-align:left;
+  font-size:0.9rem;
+  color:#444;
+  margin-bottom:10px;
+  line-height:1.8;
+}
+.fib-input{
+  width:100%;
+  padding:10px 14px;
+  border:2px solid var(--border);
+  border-radius:8px;
+  font-size:0.9rem;
+  font-family:inherit;
+  direction:ltr;
+  transition:var(--transition);
+  outline:none;
+  background:var(--gray);
+}
+.fib-input:focus{border-color:var(--primary);background:var(--white);box-shadow:0 0 0 3px rgba(10,44,82,0.08)}
+.fib-input.correct-fib{border-color:var(--green)!important;background:var(--green-bg)!important}
+.fib-input.wrong-fib{border-color:var(--red)!important;background:var(--red-bg)!important}
+
+/* ===== SENTENCE TRANSFORMATION ===== */
+.st-wrap{padding:4px 16px 14px}
+.st-original{
+  direction:ltr;
+  text-align:left;
+  font-size:0.88rem;
+  color:#555;
+  background:rgba(10,44,82,0.04);
+  border-right:3px solid var(--gold);
+  padding:8px 12px;
+  border-radius:6px;
+  margin-bottom:10px;
+  font-style:italic;
+}
+.st-textarea{
+  width:100%;
+  padding:10px 14px;
+  border:2px solid var(--border);
+  border-radius:8px;
+  font-size:0.9rem;
+  font-family:inherit;
+  direction:ltr;
+  resize:vertical;
+  min-height:70px;
+  transition:var(--transition);
+  outline:none;
+  background:var(--gray);
+}
+.st-textarea:focus{border-color:var(--primary);background:var(--white);box-shadow:0 0 0 3px rgba(10,44,82,0.08)}
+.st-textarea.correct-st{border-color:var(--green)!important;background:var(--green-bg)!important}
+.st-textarea.wrong-st{border-color:var(--red)!important;background:var(--red-bg)!important}
+
+/* ===== FEEDBACK ===== */
+.feedback-wrap{
+  padding:6px 16px 12px;
+  display:none;
+}
+.feedback-item{
+  display:flex;
+  align-items:flex-start;
+  gap:8px;
+  font-size:0.83rem;
+  line-height:1.6;
+  padding:8px 12px;
+  border-radius:8px;
+  margin-bottom:4px;
+}
+.feedback-item.correct-fb{background:rgba(26,122,74,0.1);color:#155a34}
+.feedback-item.wrong-fb{background:rgba(192,57,43,0.1);color:#7b1a12}
+.feedback-correct-ans{
+  font-size:0.82rem;
+  color:var(--green);
+  font-weight:700;
+  margin-top:4px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  padding:4px 12px;
+}
+
+/* ===== EXAM CONTROLS BOTTOM ===== */
+.exam-controls{
+  padding:16px 24px;
+  border-top:2px solid var(--border);
+  background:rgba(10,44,82,0.02);
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:space-between;
+}
+.controls-left,.controls-right{display:flex;gap:8px;flex-wrap:wrap}
+.btn-primary{
+  background:linear-gradient(135deg,var(--primary),var(--primary-light));
+  color:var(--white);
+  border:none;
+  padding:10px 20px;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:0.88rem;
+  font-family:inherit;
+  font-weight:600;
+  transition:var(--transition);
+  display:flex;align-items:center;gap:8px;
+  box-shadow:0 2px 8px rgba(10,44,82,0.2);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(10,44,82,0.3)}
+.btn-gold{
+  background:linear-gradient(135deg,var(--gold),var(--gold-light));
+  color:var(--primary-dark);
+  border:none;
+  padding:10px 20px;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:0.88rem;
+  font-family:inherit;
+  font-weight:700;
+  transition:var(--transition);
+  display:flex;align-items:center;gap:8px;
+  box-shadow:0 2px 8px rgba(212,175,55,0.3);
+}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(212,175,55,0.5)}
+.btn-outline{
+  background:var(--white);
+  color:var(--primary);
+  border:2px solid var(--primary);
+  padding:9px 18px;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:0.88rem;
+  font-family:inherit;
+  font-weight:600;
+  transition:var(--transition);
+  display:flex;align-items:center;gap:8px;
+}
+.btn-outline:hover{background:var(--primary);color:var(--white)}
+.btn-outline.btn-red{border-color:var(--red);color:var(--red)}
+.btn-outline.btn-red:hover{background:var(--red);color:var(--white)}
+.btn-outline.btn-orange{border-color:#e67e22;color:#e67e22}
+.btn-outline.btn-orange:hover{background:#e67e22;color:var(--white)}
+
+/* ===== SCORE DISPLAY ===== */
+.score-display{
+  background:linear-gradient(135deg,var(--primary),var(--primary-light));
+  color:var(--white);
+  padding:10px 20px;
+  border-radius:8px;
+  font-weight:700;
+  font-size:1rem;
+  display:none;
+  align-items:center;
+  gap:8px;
+}
+.score-display i{color:var(--gold)}
+
+/* ===== CLOSING NOTE ===== */
+.closing-note{
+  text-align:center;
+  padding:12px;
+  color:var(--primary);
+  font-weight:700;
+  font-size:0.9rem;
+  border-top:2px dashed var(--gold);
+  margin:0 24px 16px;
+}
+
+/* ===== FOCUS MODE ===== */
+#focus-overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(6,29,56,0.97);
+  z-index:2000;
+  overflow-y:auto;
+}
+#focus-overlay.active{display:flex;flex-direction:column}
+#focus-header{
+  background:linear-gradient(135deg,var(--primary-dark),var(--primary));
+  padding:16px 24px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:2px solid var(--gold);
+  flex-shrink:0;
+}
+#focus-title{
+  color:var(--gold);
+  font-size:1.1rem;
+  font-weight:700;
+}
+#focus-close{
+  background:rgba(255,255,255,0.1);
+  border:1px solid rgba(255,255,255,0.3);
+  color:var(--white);
+  padding:8px 16px;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:0.85rem;
+  font-family:inherit;
+  transition:var(--transition);
+}
+#focus-close:hover{background:var(--red);border-color:var(--red)}
+#focus-body{
+  flex:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:40px 24px;
+}
+#focus-question-wrap{
+  background:var(--white);
+  border-radius:var(--radius);
+  max-width:700px;
+  width:100%;
+  box-shadow:0 20px 60px rgba(0,0,0,0.5);
+  overflow:hidden;
+}
+#focus-footer{
+  background:rgba(255,255,255,0.05);
+  border-top:1px solid rgba(212,175,55,0.3);
+  padding:16px 24px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-shrink:0;
+}
+#focus-indicator{
+  color:rgba(255,255,255,0.7);
+  font-size:0.85rem;
+}
+#focus-progress-dots{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+  justify-content:center;
+  max-width:300px;
+}
+.focus-dot{
+  width:10px;height:10px;
+  background:rgba(255,255,255,0.2);
+  border-radius:50%;
+  cursor:pointer;
+  transition:var(--transition);
+}
+.focus-dot.active{background:var(--gold);transform:scale(1.3)}
+.focus-dot.answered{background:rgba(26,122,74,0.6)}
+.focus-nav{display:flex;gap:8px}
+.focus-nav-btn{
+  background:rgba(255,255,255,0.1);
+  border:1px solid rgba(212,175,55,0.5);
+  color:var(--white);
+  padding:10px 20px;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:0.88rem;
+  font-family:inherit;
+  transition:var(--transition);
+  display:flex;align-items:center;gap:6px;
+}
+.focus-nav-btn:hover{background:var(--gold);color:var(--primary-dark);border-color:var(--gold)}
+.focus-nav-btn:disabled{opacity:0.3;cursor:not-allowed}
+
+/* ===== TOAST ===== */
+#toast-container{
+  position:fixed;
+  bottom:24px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:3000;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  align-items:center;
+  pointer-events:none;
+}
+.toast{
+  background:var(--primary);
+  color:var(--white);
+  padding:10px 24px;
+  border-radius:24px;
+  font-size:0.88rem;
+  box-shadow:0 4px 20px rgba(0,0,0,0.3);
+  border:1px solid var(--gold);
+  animation:toastIn 0.3s ease forwards;
+  display:flex;align-items:center;gap:8px;
+  pointer-events:auto;
+}
+.toast.toast-success{background:var(--green)}
+.toast.toast-error{background:var(--red)}
+.toast.toast-gold{background:var(--gold);color:var(--primary-dark)}
+@keyframes toastIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes toastOut{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-10px)}}
+
+/* ===== LOADING ===== */
+#loading{
+  position:fixed;
+  inset:0;
+  background:var(--primary-dark);
+  z-index:5000;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:20px;
+  transition:opacity 0.5s ease;
+}
+.loader-logo{
+  color:var(--gold);
+  font-size:2.5rem;
+  font-weight:900;
+  font-family:'Georgia',serif;
+  text-align:center;
+  animation:pulse 1.5s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+.loader-bar{
+  width:200px;
+  height:4px;
+  background:rgba(255,255,255,0.1);
+  border-radius:2px;
+  overflow:hidden;
+}
+.loader-bar-inner{
+  height:100%;
+  background:var(--gold);
+  border-radius:2px;
+  animation:loading 1.5s ease-in-out infinite;
+}
+@keyframes loading{0%{width:0;margin-right:100%}50%{width:60%;margin-right:0}100%{width:0;margin-right:0;margin-left:100%}}
+.loader-text{color:rgba(255,255,255,0.6);font-size:0.85rem}
+
+/* ===== ERRORS ONLY MODE ===== */
+.exam-card.errors-mode .question-item.correct-q{display:none!important}
+
+/* ===== PRINT ===== */
+@media print{
+  #main-header,#global-score-bar,#review-panel,.exam-controls,#focus-overlay,
+  #toast-container,.btn-unsure,.nav-btn,.exam-controls-top,.btn-icon{display:none!important}
+  body{background:white;font-size:11pt}
+  .exam-card{box-shadow:none;border:1px solid #ccc;break-inside:avoid;margin-bottom:20pt}
+  .question-item{break-inside:avoid}
+  .fib-input,.st-textarea{border:1px solid #ccc;background:white}
+  #content{padding:0;max-width:100%}
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+  .header-nav{padding:8px 12px}
+  .nav-btn{padding:6px 10px;font-size:0.78rem}
+  .exam-header{padding:14px 16px}
+  .section-wrap{padding:0 12px}
+  .exam-controls{padding:12px 16px;flex-direction:column}
+  .controls-left,.controls-right{width:100%;justify-content:center}
+  .tf-wrap{flex-direction:column}
+  .tf-btns{width:100%;justify-content:center}
+  #focus-footer{flex-direction:column;gap:12px}
+  #focus-progress-dots{max-width:100%}
+  .score-display{font-size:0.88rem}
+  .question-top{gap:8px}
+}
+@media(max-width:480px){
+  .site-logo{font-size:1.4rem}
+  .exam-header-text{font-size:0.8rem}
+  .btn-primary,.btn-gold,.btn-outline{padding:8px 12px;font-size:0.82rem}
+}
+
+/* ===== UTILITY ===== */
+.hidden{display:none!important}
+.flex{display:flex}
+.items-center{align-items:center}
+.gap-8{gap:8px}
+.mt-8{margin-top:8px}
+</style>
+</head>
+<body>
+
+<!-- LOADING -->
+<div id="loading">
+  <div class="loader-logo">ما تبصمج يا دولي 🎓</div>
+  <div class="loader-bar"><div class="loader-bar-inner"></div></div>
+  <div class="loader-text">جاري تحميل الامتحانات...</div>
+</div>
+
+<!-- HEADER -->
+<header id="main-header">
+  <div class="header-top">
+    <div class="site-logo"><span>ما تبصمج يا دولي</span> 🎓</div>
+    <div class="site-subtitle">منصة الامتحانات التفاعلية | جامعة سوهاج</div>
+  </div>
+  <div class="header-nav">
+    <button class="nav-btn" id="btn-show-all-solutions" title="إظهار/إخفاء جميع الحلول">
+      <i class="fas fa-eye"></i> إظهار/إخفاء جميع الحلول
+    </button>
+    <button class="nav-btn" id="btn-focus-mode" title="وضع تركيز كامل">
+      <i class="fas fa-crosshairs"></i> وضع التركيز الكامل
+    </button>
+    <button class="nav-btn" id="btn-review-uncertain" title="مراجعة الأسئلة غير المؤكدة">
+      <i class="fas fa-bookmark"></i> أسئلة للمراجعة <span id="uncertain-count" class="nav-btn-badge"></span>
+    </button>
+    <button class="nav-btn" id="btn-shortcuts" title="اختصارات لوحة المفاتيح">
+      <i class="fas fa-keyboard"></i> اختصارات لوحة المفاتيح
+    </button>
+    <button class="nav-btn" id="btn-print" title="طباعة">
+      <i class="fas fa-print"></i> طباعة
+    </button>
+    <button class="nav-btn" id="btn-reset-all" title="إعادة تعيين الكل">
+      <i class="fas fa-redo"></i> إعادة تعيين الكل
+    </button>
+  </div>
+  <div id="shortcuts-hint">
+    <span class="kbd">1</span>-<span class="kbd">4</span> اختيار الإجابة &nbsp;|&nbsp;
+    <span class="kbd">Enter</span> تحقق &nbsp;|&nbsp;
+    <span class="kbd">Tab</span> السؤال التالي &nbsp;|&nbsp;
+    <span class="kbd">U</span> غير متأكد &nbsp;|&nbsp;
+    <span class="kbd">Esc</span> خروج وضع التركيز
+  </div>
+</header>
+
+<!-- GLOBAL SCORE BAR -->
+<div id="global-score-bar">
+  <div class="global-score-item"><i class="fas fa-trophy" style="color:var(--gold)"></i> إجمالي النتيجة: <strong id="total-score-display">-</strong></div>
+  <div class="global-score-item"><i class="fas fa-check-circle" style="color:var(--green)"></i> صحيح: <strong id="total-correct">0</strong></div>
+  <div class="global-score-item"><i class="fas fa-times-circle" style="color:var(--red)"></i> خطأ: <strong id="total-wrong">0</strong></div>
+  <div class="global-score-item"><i class="fas fa-question-circle" style="color:var(--gray-dark)"></i> لم يُجب: <strong id="total-unanswered">0</strong></div>
+  <div class="global-score-item"><i class="fas fa-bookmark" style="color:var(--gold)"></i> للمراجعة: <strong id="total-uncertain">0</strong></div>
+</div>
+
+<!-- REVIEW PANEL -->
+<div id="review-panel">
+  <h3><i class="fas fa-bookmark" style="color:var(--gold)"></i> أسئلة علّمتها للمراجعة</h3>
+  <div class="review-list" id="review-list-items"></div>
+</div>
+
+<!-- MAIN CONTENT -->
+<main id="content"></main>
+
+<!-- FOCUS OVERLAY -->
+<div id="focus-overlay">
+  <div id="focus-header">
+    <div id="focus-title"><i class="fas fa-crosshairs" style="color:var(--gold)"></i> وضع التركيز الكامل</div>
+    <button id="focus-close"><i class="fas fa-times"></i> خروج</button>
+  </div>
+  <div id="focus-body">
+    <div id="focus-question-wrap"></div>
+  </div>
+  <div id="focus-footer">
+    <div id="focus-indicator">السؤال 1 من 1</div>
+    <div id="focus-progress-dots"></div>
+    <div class="focus-nav">
+      <button class="focus-nav-btn" id="focus-prev" disabled><i class="fas fa-arrow-right"></i> السابق</button>
+      <button class="focus-nav-btn" id="focus-next"><i class="fas fa-arrow-left"></i> التالي</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div id="toast-container"></div>
+
+<script>
+// ===== DATA =====
+const RAW_DATA = [{"exams":[{"id":1,"header":"Sohag University | Faculty of Education | English Dept.\nEnglish Language (Eng 1215/1216) | Date: 22/6/2024 | 1st Year\n(Total: 35 marks) أقسام اللغة العربية، الفرنسية، الانجليزية، التاريخ، الجغرافيا الفلسفة، علم النفس، الطفولة","reading_passage":"Archaeology is a source of history, not just a humble auxiliary discipline. Archaeological data are historical documents in their own right, not mere illustrations to written texts. Just as much as any other historian, an archaeologist studies and tries to reconstitute the process that has created the human world in which we live—and us ourselves in so far as we are each creatures of our age and social environment. Archaeological data are all changes in the material world resulting from human action or, more succinctly, the fossilized results of human behavior. The sum total of these constitute what may be called the archaeological record. This record exhibits certain peculiarities and deficiencies the consequences of which produce a rather superficial contrast between archaeological history and the more familiar kind based upon written records.\n\nNot all human behavior fossilizes. The words I utter and you hear as vibrations in the air are certainly human changes in the material world and may be of great historical significance. Yet they leave no sort of trace in the archaeological records unless they are captured by a dictaphone or written down by a clerk. The movement of troops on the battlefield may \"change the course of history\", but this is equally ephemeral from the archaeologist's standpoint. What is perhaps worse, most organic materials are perishable. Everything made of wood, hide, wool, linen, grass, hair and similar materials will decay and vanish in dust in a few years or centuries, save under very exceptional conditions. In a relatively brief period the archaeological record is reduced to mere scraps of stone, bone, glass, metal, and earthenware. Still modern archaeology, by applying appropriate techniques and comparative methods, aided by a few lucky finds from peat bogs, deserts, and frozen soils, is able to fill up a good deal of the gap.","sections":[{"title":"Q1) Choose the correct answer: (30 marks)","questions":[{"number":1,"type":"multiple_choice","question_text":"What is the author's main purpose in the passage?","options":[{"letter":"A","text":"To point out the importance of recent advances in archaeology","is_correct":false,"comment":"❌ غلط – النص ما بيكلمش عن التطورات الحديثة في علم الآثار."},{"letter":"B","text":"To describe an archaeologist's education","is_correct":false,"comment":"❌ غلط – النص ما اتكلمش خالص عن تعليم عالم الآثار."},{"letter":"C","text":"To explain how archaeology is a source of history","is_correct":true,"comment":"✅ صح – دي الفكرة الأساسية: إن علم الآثار مصدر للتاريخ مش مجرد أداة مساعدة."},{"letter":"D","text":"To encourage more people to become archaeologists","is_correct":false,"comment":"❌ غلط – النص مش بيشجع حد على دخول المجال."}],"correct_answer":"C"},{"number":2,"type":"multiple_choice","question_text":"According to the passage, the archaeological record consists of","options":[{"letter":"A","text":"spoken words of great historical significance","is_correct":false,"comment":"❌ غلط – الكلام المنطوق مش بيترك أثر أثري."},{"letter":"B","text":"the fossilize results of human activity","is_correct":true,"comment":"✅ صح – النص بيقول بالضبط: \"the fossilized results of human behavior\"."},{"letter":"C","text":"organic materials","is_correct":false,"comment":"❌ غلط – معظم المواد العضوية بتتحلل، مش بتفضل في السجل الأثري."},{"letter":"D","text":"ephemeral ideas","is_correct":false,"comment":"❌ غلط – الأفكار الزائلة مش بتتحجر ومش بتكون سجل أثري."}],"correct_answer":"B"},{"number":3,"type":"multiple_choice","question_text":"The word \"they\" in line 13 refers to","options":[{"letter":"A","text":"scraps","is_correct":false,"comment":"❌ غلط – \"scraps\" اتذكرت بعدين، مش قبل."},{"letter":"B","text":"words","is_correct":true,"comment":"✅ صح – الضمير \"they\" بيعود على \"The words I utter\" اللي قبلها مباشرة."},{"letter":"C","text":"troops","is_correct":false,"comment":"❌ غلط – الجنود اتذكروا في جملة تانية خالص."},{"letter":"D","text":"humans","is_correct":false,"comment":"❌ غلط – \"humans\" مش المقصود هنا."}],"correct_answer":"B"},{"number":4,"type":"multiple_choice","question_text":"Which of the following is NOT mentioned as an example of an organic material?","options":[{"letter":"A","text":"Stone","is_correct":true,"comment":"✅ صح – الحجر مادة غير عضوية، والنص ماذكرش الحجر مع المواد العضوية."},{"letter":"B","text":"Wool","is_correct":false,"comment":"❌ غلط – الصوف اتذكر كمادة عضوية."},{"letter":"C","text":"Grass","is_correct":false,"comment":"❌ غلط – العشب اتذكر كمادة عضوية."},{"letter":"D","text":"Hair","is_correct":false,"comment":"❌ غلط – الشعر اتذكر كمادة عضوية."}],"correct_answer":"A"},{"number":5,"type":"multiple_choice","question_text":"The author mentions all of the following archaeological discovery sites EXCEPT","options":[{"letter":"A","text":"urban areas","is_correct":true,"comment":"✅ صح – المناطق الحضرية (المدن) ما اتذكرتش في النص."},{"letter":"B","text":"peat bogs","is_correct":false,"comment":"❌ غلط – المستنقعات الخُثّية اتذكرت."},{"letter":"C","text":"very hot and dry lands","is_correct":false,"comment":"❌ غلط – الأراضي شديدة الحرارة والجفاف (= الصحاري) اتذكرت."},{"letter":"D","text":"earth that has been frozen","is_correct":false,"comment":"❌ غلط – التربة المتجمدة اتذكرت."}],"correct_answer":"A"},{"number":6,"type":"multiple_choice","question_text":"The paragraph following the passage most probably discusses","options":[{"letter":"A","text":"techniques for recording oral histories","is_correct":false,"comment":"❌ غلط – النص مابيركزش على التاريخ الشفهي."},{"letter":"B","text":"certain battlefield excavation methods","is_correct":false,"comment":"❌ غلط – ساحة المعركة كانت مجرد مثال عابر."},{"letter":"C","text":"some specific archaeological discoveries","is_correct":true,"comment":"✅ صح – بعد ما شرح ازاي الآثار الحديث بيسد الفجوات، من الطبيعي إنه يتكلم عن اكتشافات محددة."},{"letter":"D","text":"building materials of the nineteenth and twentieth centuries","is_correct":false,"comment":"❌ غلط – مش له علاقة بموضوع النص."}],"correct_answer":"C"},{"number":7,"type":"multiple_choice","question_text":"We hung shiny decorations on our Christmas tree. Shiny is a/an----","options":[{"letter":"A","text":"verb","is_correct":false,"comment":"❌ غلط – \"shiny\" مش فعل (مش بيعبر عن حدث)."},{"letter":"B","text":"adjective","is_correct":true,"comment":"✅ صح – \"shiny\" صفة بتوصف \"decorations\" (زينة لامعة)."},{"letter":"C","text":"noun","is_correct":false,"comment":"❌ غلط – \"shiny\" مش اسم."},{"letter":"D","text":"adverb","is_correct":false,"comment":"❌ غلط – \"shiny\" مش ظرف (لا يوصف فعل أو صفة أخرى هنا)."}],"correct_answer":"B"},{"number":8,"type":"multiple_choice","question_text":"Grace wants to go shopping tomorrow. Tomorrow is a/an ----","options":[{"letter":"A","text":"verb","is_correct":false,"comment":"❌ غلط – \"tomorrow\" مش فعل."},{"letter":"B","text":"adjective","is_correct":false,"comment":"❌ غلط – \"tomorrow\" مش صفة هنا، مش بتوصف اسم."},{"letter":"C","text":"noun","is_correct":false,"comment":"❌ غلط – ممكن تكون اسم لكن في الجملة دي وظيفتها ظرف زمان."},{"letter":"D","text":"adverb","is_correct":true,"comment":"✅ صح – \"tomorrow\" ظرف زمان بيجاوب على سؤال \"متى؟\" للفعل \"wants to go\"."}],"correct_answer":"D"},{"number":9,"type":"multiple_choice","question_text":"He doesn't have ---- brothers or sisters.","options":[{"letter":"A","text":"a","is_correct":false,"comment":"❌ غلط – \"a\" بتُستخدم مع الاسم المفرد، وهنا \"brothers or sisters\" جمع."},{"letter":"B","text":"an","is_correct":false,"comment":"❌ غلط – \"an\" للمفرد اللي بيبدأ بحرف متحرك، والجملة جمع."},{"letter":"C","text":"some","is_correct":false,"comment":"❌ غلط – \"some\" بتُستخدم في الجمل المثبتة، وهنا الجملة منفية."},{"letter":"D","text":"any","is_correct":true,"comment":"✅ صح – \"any\" بتُستخدم في النفي والسؤال مع الأسماء الجمع."}],"correct_answer":"D"},{"number":10,"type":"multiple_choice","question_text":"Would you like ---- cup of coffee?","options":[{"letter":"A","text":"a","is_correct":true,"comment":"✅ صح – \"cup\" مفردة ومعدودة، بنستخدم \"a\" قبلها."},{"letter":"B","text":"an","is_correct":false,"comment":"❌ غلط – \"cup\" بتبدأ بحرف ساكن، فـ\"a\" هي الصح."},{"letter":"C","text":"some","is_correct":false,"comment":"❌ غلط – ممكن تقول \"some coffee\" لكن مش مع \"cup\" المفردة."},{"letter":"D","text":"any","is_correct":false,"comment":"❌ غلط – \"any\" مش بتُستخدم في العروض المهذبة اللي متوقع إجابتها \"نعم\"."}],"correct_answer":"A"},{"number":11,"type":"multiple_choice","question_text":"The Magna Carta is an important document in history. Choose the proper noun","options":[{"letter":"A","text":"The","is_correct":false,"comment":"❌ غلط – دي أداة تعريف، مش اسم علم."},{"letter":"B","text":"Magna Carta","is_correct":true,"comment":"✅ صح – ده اسم علم (وثيقة محددة)."},{"letter":"C","text":"important","is_correct":false,"comment":"❌ غلط – صفة."},{"letter":"D","text":"document","is_correct":false,"comment":"❌ غلط – اسم نكرة (common noun)."}],"correct_answer":"B"},{"number":12,"type":"multiple_choice","question_text":"My naughty puppy chewed on my shoes. Choose the subject","options":[{"letter":"A","text":"chewed","is_correct":false,"comment":"❌ غلط – ده الفعل."},{"letter":"B","text":"my shoes","is_correct":false,"comment":"❌ غلط – ده المفعول به (اللي وقع عليه الفعل)."},{"letter":"C","text":"My naughty puppy","is_correct":true,"comment":"✅ صح – الفاعل (اللي عمل الفعل) هو الكلب الشقي."},{"letter":"D","text":"shoes","is_correct":false,"comment":"❌ غلط – جزء من المفعول به."}],"correct_answer":"C"},{"number":13,"type":"multiple_choice","question_text":"I did all my math homework ---- the last page.","options":[{"letter":"A","text":"accept","is_correct":false,"comment":"❌ غلط – \"accept\" معناها يقبل."},{"letter":"B","text":"except","is_correct":true,"comment":"✅ صح – \"except\" معناها ما عدا، والجملة: \"خلصت كل الواجب ما عدا آخر صفحة\"."},{"letter":"C","text":"incept","is_correct":false,"comment":"❌ غلط – كلمة مش شائعة ومش مناسبة."},{"letter":"D","text":"expect","is_correct":false,"comment":"❌ غلط – \"expect\" معناها يتوقع."}],"correct_answer":"B"},{"number":14,"type":"multiple_choice","question_text":"\"a hot potato\" is translated as ----","options":[{"letter":"A","text":"الكرة في ملعبك","is_correct":false,"comment":"❌ غلط – \"الكرة في ملعبك\" معناها \"the ball is in your court\"."},{"letter":"B","text":"دون اي تردد","is_correct":false,"comment":"❌ غلط – \"دون أي تردد\" معناها \"without any hesitation\"."},{"letter":"C","text":"لف ودوران","is_correct":false,"comment":"❌ غلط – \"لف ودوران\" معناها \"beating around the bush\"."},{"letter":"D","text":"قضية ساخنة","is_correct":true,"comment":"✅ صح – \"a hot potato\" معناها قضية شائكة أو ساخنة."}],"correct_answer":"D"},{"number":15,"type":"multiple_choice","question_text":"\"It costs me an arm and a leg\" is translated as ----","options":[{"letter":"A","text":"رجل وذراع","is_correct":false,"comment":"❌ غلط – ترجمة حرفية ملهاش معنى اصطلاحي."},{"letter":"B","text":"بالطول والعرض","is_correct":false,"comment":"❌ غلط – معناها \"in full detail\"."},{"letter":"C","text":"غالي الثمن","is_correct":true,"comment":"✅ صح – التعبير معناه إن الشيء باهظ التكلفة."},{"letter":"D","text":"طويل البال","is_correct":false,"comment":"❌ غلط – معناها \"patient\"."}],"correct_answer":"C"}]},{"title":"Q2) True/False (5 marks)","questions":[{"number":1,"type":"true_false","statement":"L didn't let his comments effect me.","answer":false,"explanation":"False – الشرح: \"effect\" اسم (تأثير) والمطلوب الفعل \"affect\" (يؤثر)."},{"number":2,"type":"true_false","statement":"The neighbors painted there whole house last week.","answer":false,"explanation":"False – الشرح: \"there\" معناها هناك، والصحيح استخدام ضمير الملكية \"their\" (بيتهم)."},{"number":3,"type":"true_false","statement":"\"Don't put all your eggs in one basket\" is translated as \"لا تضع البيض كله في سلة واحدة\".","answer":true,"explanation":"True – الشرح: ترجمة صحيحة للمثل."},{"number":4,"type":"true_false","statement":"The English expression \"Can't judge a book by its cover\" is translated into Arabic as \"لا تحكم على الاشياء من ظاهرها\".","answer":true,"explanation":"True – الشرح: الترجمة صحيحة للمعنى."},{"number":5,"type":"true_false","statement":"The English expression 'Curiosity killed the cat' can be translated as \"حب الاستطلاع قد يجلب الأذي\".","answer":true,"explanation":"True – الشرح: المعنى صحيح، والترجمة مناسبة."}]}]},{"id":2,"header":"Sohag University | Faculty of Arts\nPrimary Education (Arabic-English-Social Studies-French) Departments | First Year\nEnglish Language | June 2024","reading_passage":"I had a short goatskin jacket, and a pair of open-kneed breeches. The breeches were made of skin of an old he-goat, and the hair hung down so far on each side that it reached half way between my knees and my feet. I had neither stockings nor shoes but had made a pair of rough, shapeless coverings for my legs, so strange that I do not know what to call them. I wore a wide belt of dried goatskin, tied in a knot. On this belt, instead of a sword and ==dagger==, I wore on one side a small saw and on the other an ==axe==. I had two bags, both made of goatskin. In one of them I had my ==powder==, in the other my shot.","sections":[{"title":"Q. No. 1. Choose the correct answer according to the passage: - (2 marks each, 50 marks)","questions":[{"number":1,"type":"multiple_choice","question_text":"Robinson Crusoe's head wear was ......","options":[{"letter":"a","text":"Small hat made of goatskin","is_correct":true,"comment":"✅ صح – في الرواية، كروزو بيصف قبعة صغيرة من جلد الماعز."},{"letter":"b","text":"high straw hat","is_correct":false,"comment":"❌ غلط – مش قبعة قش."},{"letter":"c","text":"a piece of cloth high style","is_correct":false,"comment":"❌ غلط – مش قطعة قماش."},{"letter":"d","text":"high style","is_correct":false,"comment":"❌ غلط – غير دقيقة."}],"correct_answer":"a"},{"number":2,"type":"multiple_choice","question_text":"He protected his neck from .......","options":[{"letter":"a","text":"The sun","is_correct":false,"comment":"❌ غلط – الطوق كان لحماية رقبته من المطر فقط."},{"letter":"b","text":"the insects","is_correct":false,"comment":"❌ غلط – مفيش ذكر للحشرات."},{"letter":"c","text":"the rain","is_correct":true,"comment":"✅ صح – في الرواية، صنع طوق من جلد الماعز عشان المطر مايدخلش لرقبته."},{"letter":"d","text":"sun and rain","is_correct":false,"comment":"❌ غلط – ما كانش للحماية من الشمس."}],"correct_answer":"c"},{"number":3,"type":"multiple_choice","question_text":"Crusoe wore ......","options":[{"letter":"a","text":"A goatskin pair of shoes","is_correct":false,"comment":"❌ غلط – ماعندوش حذاء، عامل أغطية خشنة لرجليه."},{"letter":"b","text":"long to knee shoes","is_correct":false,"comment":"❌ غلط – مش موجود."},{"letter":"c","text":"a pair of rough coverings","is_correct":true,"comment":"✅ صح – النص بيقول: \"made a pair of rough, shapeless coverings for my legs\"."},{"letter":"d","text":"leather shoes","is_correct":false,"comment":"❌ غلط – مش جلد مدبوغ."}],"correct_answer":"c"},{"number":4,"type":"multiple_choice","question_text":"Crusoe carried ........ on his belt.","options":[{"letter":"a","text":"A sword","is_correct":false,"comment":"❌ غلط – النص بيقول إنه بدل السيف والخنجر حط أدوات تانية."},{"letter":"b","text":"a sword and a dagger","is_correct":false,"comment":"❌ غلط – ده اللي استبدله."},{"letter":"c","text":"saw and axe","is_correct":true,"comment":"✅ صح – على الحزام كان فيه منشار صغير وفأس."},{"letter":"d","text":"gun","is_correct":false,"comment":"❌ غلط – المسدس مش مذكور على الحزام في القطعة دي."}],"correct_answer":"c"},{"number":5,"type":"multiple_choice","question_text":"the two most important things to Crusoe were ......","options":[{"letter":"a","text":"His gun and axe","is_correct":true,"comment":"✅ صح – البندقية للصيد والحماية، والفأس للأعمال الأساسية، أهم أدواته."},{"letter":"b","text":"gun and umbrella","is_correct":false,"comment":"❌ غلط – المظلة مش بنفس الأهمية."},{"letter":"c","text":"sword and shoes","is_correct":false,"comment":"❌ غلط – معندوش سيف ولا حذاء."},{"letter":"d","text":"razor and dagger","is_correct":false,"comment":"❌ غلط – مش الأدوات الأساسية."}],"correct_answer":"a"},{"number":6,"type":"multiple_choice","question_text":"Crusoe cut his beard short with ......","options":[{"letter":"a","text":"a razor","is_correct":false,"comment":"❌ غلط – ما كانش عنده موس حلاقة."},{"letter":"b","text":"a pair of scissors","is_correct":true,"comment":"✅ صح – في الرواية استخدم مقص كان محتفظ بيه."},{"letter":"c","text":"dagger","is_correct":false,"comment":"❌ غلط – الخنجر مش مناسب لتقصير اللحية."},{"letter":"d","text":"knife","is_correct":false,"comment":"❌ غلط – مذكروش."}],"correct_answer":"b"},{"number":7,"type":"multiple_choice","question_text":"Crusoe lived ......","options":[{"letter":"a","text":"in England","is_correct":false,"comment":"❌ غلط – هو إنجليزي لكنه مش عايش هناك بعد الغرق."},{"letter":"b","text":"on an uninhabited Island far from England","is_correct":true,"comment":"✅ صح – دي القصة الشهيرة، عاش على جزيرة غير مأهولة."},{"letter":"c","text":"in America","is_correct":false,"comment":"❌ غلط – مش موجود في أمريكا."},{"letter":"d","text":"in Africa","is_correct":false,"comment":"❌ غلط – مش موجود في أفريقيا."}],"correct_answer":"b"},{"number":8,"type":"multiple_choice","question_text":"the word \"powder\" means......","options":[{"letter":"a","text":"بودرة","is_correct":false,"comment":"❌ غلط – بودرة تجميل مش معنى مناسب هنا."},{"letter":"b","text":"بارود","is_correct":true,"comment":"✅ صح – في سياق الأسلحة، \"powder\" معناها بارود البندقية."},{"letter":"c","text":"براد","is_correct":false,"comment":"❌ غلط – إناء الشاي."},{"letter":"d","text":"بردة","is_correct":false,"comment":"❌ غلط – كساء."}],"correct_answer":"b"},{"number":9,"type":"multiple_choice","question_text":"the word \"dagger\" means......","options":[{"letter":"a","text":"سكين","is_correct":true,"comment":"✅ صح – \"dagger\" معناها خنجر أو سكين كبيرة."},{"letter":"b","text":"فأس","is_correct":false,"comment":"❌ غلط – فأس معناها \"axe\"."},{"letter":"c","text":"مسدس","is_correct":false,"comment":"❌ غلط – مسدس معناها \"pistol\"."},{"letter":"d","text":"بارود","is_correct":false,"comment":"❌ غلط – بارود معناها \"powder\"."}],"correct_answer":"a"},{"number":10,"type":"multiple_choice","question_text":"the word \"axe\" means ......","options":[{"letter":"a","text":"حبل","is_correct":false,"comment":"❌ غلط – \"rope\"."},{"letter":"b","text":"سكين","is_correct":false,"comment":"❌ غلط – \"knife\"."},{"letter":"c","text":"مسدس","is_correct":false,"comment":"❌ غلط – \"pistol\"."},{"letter":"d","text":"فأس","is_correct":true,"comment":"✅ صح – \"axe\" معناها فأس."}],"correct_answer":"d"}]},{"title":"Q.2. Translation: choose the correct answer:","questions":[{"number":11,"type":"multiple_choice","question_text":"Improve your writing","options":[{"letter":"a","text":"اكتبوا برفق","is_correct":false,"comment":"❌ غلط – معناها \"write gently\"."},{"letter":"b","text":"حسنوا خطكم","is_correct":true,"comment":"✅ صح – \"improve your writing\" معناها حسّن خطك أو كتابتك."},{"letter":"c","text":"اكتبوا مجددا","is_correct":false,"comment":"❌ غلط – معناها \"write again\"."},{"letter":"d","text":"أعيدوا الكتابة","is_correct":false,"comment":"❌ غلط – معناها \"rewrite\"."}],"correct_answer":"b"},{"number":12,"type":"multiple_choice","question_text":"the boy ate the fish, even its head","options":[{"letter":"a","text":"أكل الولد السمكة حتى رأسها","is_correct":true,"comment":"✅ صح – الترجمة كاملة وتنقل \"حتى رأسها\"."},{"letter":"b","text":"أكل الولد السمكة","is_correct":false,"comment":"❌ غلط – ناقصة، محذوف منها \"حتى رأسها\"."},{"letter":"c","text":"أكل الولد","is_correct":false,"comment":"❌ غلط – ناقصة جداً."},{"letter":"d","text":"أكل الولد رأس السمكة","is_correct":false,"comment":"❌ غلط – ديه بتقول إنه أكل الرأس بس."}],"correct_answer":"a"},{"number":13,"type":"multiple_choice","question_text":"I passed the test","options":[{"letter":"a","text":"لقد نجح في الامتحان","is_correct":false,"comment":"❌ غلط – الضمير \"هو\" مش \"أنا\"."},{"letter":"b","text":"لقد نجحوا في الامتحان","is_correct":false,"comment":"❌ غلط – الضمير \"هم\"."},{"letter":"c","text":"لقد نجحت في الامتحان","is_correct":true,"comment":"✅ صح – الضمير \"أنا\" (I) يترجم \"نجحت\"."},{"letter":"d","text":"هي نجحت في الامتحان","is_correct":false,"comment":"❌ غلط – الضمير \"هي\"."}],"correct_answer":"c"},{"number":14,"type":"multiple_choice","question_text":"Be sincere in your work..........","options":[{"letter":"a","text":"اخلص في مذاكرتك","is_correct":false,"comment":"❌ غلط – \"مذاكرتك\" معناها studying، مش work."},{"letter":"b","text":"اخلص في عملك","is_correct":true,"comment":"✅ صح – ترجمة مباشرة وصحيحة."},{"letter":"c","text":"أعد عملك","is_correct":false,"comment":"❌ غلط – \"أعد\" معناها redo."},{"letter":"d","text":"أحسن عملك","is_correct":false,"comment":"❌ غلط – مش بالضبط نفس المعنى."}],"correct_answer":"b"},{"number":15,"type":"multiple_choice","question_text":"the man said something good","options":[{"letter":"a","text":"قال الرجل فتنة","is_correct":false,"comment":"❌ غلط – \"فتنة\" معناها temptation."},{"letter":"b","text":"قال الرجل سوءا","is_correct":false,"comment":"❌ غلط – \"سوءاً\" معناها evil."},{"letter":"c","text":"قال الرجل شرا","is_correct":false,"comment":"❌ غلط – \"شراً\" معناها evil."},{"letter":"d","text":"قال الرجل خيرا","is_correct":true,"comment":"✅ صح – \"something good\" معناها \"خيراً\"."}],"correct_answer":"d"},{"number":16,"type":"multiple_choice","question_text":"the boy says the truth.","options":[{"letter":"a","text":"تقول الفتاة الصدق","is_correct":false,"comment":"❌ غلط – الفاعل بنت مش ولد."},{"letter":"b","text":"يقول الولد كذبا","is_correct":false,"comment":"❌ غلط – \"كذباً\" معناها lies."},{"letter":"c","text":"يقول الولد الصدق","is_correct":true,"comment":"✅ صح – الفاعل ولد والمفعول الصدق."},{"letter":"d","text":"يقول الرجل الحقيقة","is_correct":false,"comment":"❌ غلط – الفاعل \"الرجل\" مش \"الولد\"."}],"correct_answer":"c"},{"number":17,"type":"multiple_choice","question_text":"who struggled has won.","options":[{"letter":"a","text":"من أمن العقاب أساء المذاكرة","is_correct":false,"comment":"❌ غلط – مثل تاني خالص."},{"letter":"b","text":"من حصد وجد","is_correct":false,"comment":"❌ غلط – مش المثل المشهور."},{"letter":"c","text":"جنى ثمار عمله سوءا","is_correct":false,"comment":"❌ غلط – معنى مختلف."},{"letter":"d","text":"من جد وجد","is_correct":true,"comment":"✅ صح – المثل العربي المطابق لـ \"who struggled has won\"."}],"correct_answer":"d"},{"number":18,"type":"multiple_choice","question_text":"the boy obeys his father.","options":[{"letter":"a","text":"تطيع الفتاة أمها","is_correct":false,"comment":"❌ غلط – الفاعل بنت والمفعول أم."},{"letter":"b","text":"يطيع الرجل أباه","is_correct":true,"comment":"✅ صح (الأقرب) – رغم إن \"الرجل\" معناها man، لكن الخيارات التانية كلها غلط، والأرجح قصدوا \"الولد\"."},{"letter":"c","text":"يطيع الولد جده","is_correct":false,"comment":"❌ غلط – المفعول \"جده\" مش \"أباه\"."},{"letter":"d","text":"لا يطيع الولد أباه","is_correct":false,"comment":"❌ غلط – النفي بيغير المعنى."}],"correct_answer":"b"},{"number":19,"type":"multiple_choice","question_text":"I returned the trust to its people.","options":[{"letter":"a","text":"رددت الأمانة إلى أصحابها","is_correct":true,"comment":"✅ صح – \"الأمانة\" = trust، و\"أصحابها\" = its people."},{"letter":"b","text":"رددت الثقة إلى أهلي","is_correct":false,"comment":"❌ غلط – \"الثقة\" معناها confidence، مش trust."},{"letter":"c","text":"رددت الثقة إلى نفسي","is_correct":false,"comment":"❌ غلط – معنى مختلف."},{"letter":"d","text":"رددت الأمانة إلى ذويها","is_correct":false,"comment":"❌ غلط – صحيحة لغوياً لكن (أ) هي الأشهر."}],"correct_answer":"a"},{"number":20,"type":"multiple_choice","question_text":"the sparrow flew","options":[{"letter":"a","text":"لقد طار العصفور","is_correct":true,"comment":"✅ صح – \"sparrow\" معناها عصفور."},{"letter":"b","text":"لقد طار البغبغان","is_correct":false,"comment":"❌ غلط – البغبغان parrot."},{"letter":"c","text":"لقد طار الكتكوت","is_correct":false,"comment":"❌ غلط – الكتكوت chick."},{"letter":"d","text":"لقد طار الغراب","is_correct":false,"comment":"❌ غلط – الغراب crow."}],"correct_answer":"a"},{"number":21,"type":"multiple_choice","question_text":"professor's lectures are important.","options":[{"letter":"a","text":"محاضرات الأساتذة غير مهمة","is_correct":false,"comment":"❌ غلط – جمع أساتذة + نفي."},{"letter":"b","text":"محاضرات الأستاذ غير مهمة","is_correct":false,"comment":"❌ غلط – نفي."},{"letter":"c","text":"محاضرات الأستاذ مهمة","is_correct":true,"comment":"✅ صح – الأستاذ مفرد (professor's) والمحاضرات مهمة."},{"letter":"d","text":"محاضرات الأساتذة مهمة","is_correct":false,"comment":"❌ غلط – جمع أساتذة."}],"correct_answer":"c"},{"number":22,"type":"multiple_choice","question_text":"we will look into your request","options":[{"letter":"a","text":"سوف ننظر في طلبك","is_correct":true,"comment":"✅ صح – \"ننظر في\" بمعنى ندرس أو نفحص."},{"letter":"b","text":"سوف لن نقبل طلبك","is_correct":false,"comment":"❌ غلط – معنى عكسي."},{"letter":"c","text":"سوف ننظر إلى طلبك","is_correct":false,"comment":"❌ غلط – \"نظر إلى\" حرفي، مش معنى التعبير الاصطلاحي."},{"letter":"d","text":"سوف نقبل طلبك","is_correct":false,"comment":"❌ غلط – معنى مختلف."}],"correct_answer":"a"},{"number":23,"type":"multiple_choice","question_text":"what's that big building?","options":[{"letter":"a","text":"ما هذا","is_correct":false,"comment":"❌ غلط – ناقصة."},{"letter":"b","text":"ما هذا البناء","is_correct":false,"comment":"❌ غلط – ناقصة \"الكبير\"."},{"letter":"c","text":"البناء الكبير","is_correct":false,"comment":"❌ غلط – مش سؤال."},{"letter":"d","text":"ما هذا البناء الكبير","is_correct":true,"comment":"✅ صح – ترجمة كاملة للسؤال."}],"correct_answer":"d"},{"number":24,"type":"multiple_choice","question_text":"the discussion of the subject began yesterday","options":[{"letter":"a","text":"بدأ بحث الموضوع أمس","is_correct":true,"comment":"✅ صح – \"بحث\" هنا بمعنى مناقشة."},{"letter":"b","text":"بدأت صياغة الموضوع أمس","is_correct":false,"comment":"❌ غلط – \"صياغة\" معناها drafting."},{"letter":"c","text":"بدأ الموضوع أمس","is_correct":false,"comment":"❌ غلط – ناقصة \"مناقشة\"."},{"letter":"d","text":"بدأت كتابة الموضوع أمس","is_correct":false,"comment":"❌ غلط – \"كتابة\" معناها writing."}],"correct_answer":"a"},{"number":25,"type":"multiple_choice","question_text":"I went to New York to attend the conference, \"convention\".","options":[{"letter":"a","text":"سافرت إلى أمريكا","is_correct":false,"comment":"❌ غلط – عامة ومش دقيقة."},{"letter":"b","text":"سافرت إلى نيويورك لحضور المؤتمر","is_correct":true,"comment":"✅ صح – فيها الوجهة والغرض."},{"letter":"c","text":"سافرت الى نيويورك","is_correct":false,"comment":"❌ غلط – ناقصة الغرض."},{"letter":"d","text":"حضرت المؤتمر في نيويورك","is_correct":false,"comment":"❌ غلط – مش متضمنة الذهاب."}],"correct_answer":"b"}]},{"title":"Q.2: State whether the following sentences are true or false: (1 marks each, 20 marks)","questions":[{"number":1,"type":"true_false","statement":"Cairo is the bigger city in Egypt.","answer":false,"explanation":"False – الغلط: للمقارنة بين كل المدن نستخدم \"the biggest\" (تفضيل عُليا) مش \"bigger\" (مقارنة بين اتنين)."},{"number":2,"type":"true_false","statement":"Lucy go shopping every once in a while.","answer":false,"explanation":"False – الغلط: الفاعل \"Lucy\" مفرد غائب، يبقى الفعل ياخد \"es\": \"goes\"."},{"number":3,"type":"true_false","statement":"She is taller then her brother.","answer":false,"explanation":"False – الغلط: \"then\" معناها \"بعد ذلك\"، والصحيح \"than\" للمقارنة."},{"number":4,"type":"true_false","statement":"They eats out every Monday.","answer":false,"explanation":"False – الغلط: \"They\" جمع، الفعل يبقى من غير \"s\": \"eat\"."},{"number":5,"type":"true_false","statement":"Maria is a teacher. She teach students.","answer":false,"explanation":"False – الغلط: \"She\" مفرد، يبقى الفعل \"teaches\"."},{"number":6,"type":"true_false","statement":"I doesn't like tea.","answer":false,"explanation":"False – الغلط: مع \"I\" نستخدم \"don't\"، مش \"doesn't\"."},{"number":7,"type":"true_false","statement":"They don't do their homework.","answer":true,"explanation":"True – صح: التركيب صحيح."},{"number":8,"type":"true_false","statement":"The soup tastes awful.","answer":true,"explanation":"True – صح: \"tastes\" فعل ربط، يوصف بالصفة \"awful\"."},{"number":9,"type":"true_false","statement":"I tasted the soup carefully.","answer":true,"explanation":"True – صح: \"tasted\" فعل حركي، والظرف \"carefully\" صحيح."},{"number":10,"type":"true_false","statement":"The Amazon is the long river in the world.","answer":false,"explanation":"False – الغلط: الصحيح \"the longest\" (تفضيل عُليا)."},{"number":11,"type":"true_false","statement":"She behaves well. Her behavior is good.","answer":true,"explanation":"True – صح: التمييز بين الظرف والصفة سليم."},{"number":12,"type":"true_false","statement":"My mother usually teaches me English.","answer":true,"explanation":"True – صح: الجملة صحيحة نحوياً."},{"number":13,"type":"true_false","statement":"I likes Math and she likes English.","answer":false,"explanation":"False – الغلط: \"I\" ضمير متكلم، الفعل من غير \"s\": \"I like\"."},{"number":14,"type":"true_false","statement":"In my opinion, the third dress is the better one.","answer":false,"explanation":"False – الغلط: عند المقارنة بين أكثر من اتنين نستخدم \"the best\"."},{"number":15,"type":"true_false","statement":"Stainless steel is a strong metal.","answer":true,"explanation":"True – صح: حقيقة وصحيحة نحوياً."},{"number":16,"type":"true_false","statement":"She is the most important person in the selecting committee.","answer":false,"explanation":"False – الغلط: المصطلح الصحيح \"selection committee\" مش \"selecting committee\"."},{"number":17,"type":"true_false","statement":"Its raining cats and dogs.","answer":false,"explanation":"False – الغلط: المطلوب \"It's\" (اختصار It is) مش \"Its\" (ضمير ملكية)."},{"number":18,"type":"true_false","statement":"I know a place and we can dine their.","answer":false,"explanation":"False – الغلط: \"their\" ملكية، والصحيح \"there\" (هناك)."},{"number":19,"type":"true_false","statement":"The sun rose at 6:30 yesterday morning.","answer":true,"explanation":"True – صح: فعل ماضي بسيط مناسب."},{"number":20,"type":"true_false","statement":"I promise that I will not tell anyone.","answer":true,"explanation":"True – صح: الجملة سليمة."}]}]},{"id":3,"header":"Sohag University | Faculty of Education (Science Departments)\nEnglish Language Examination | 2nd Term 2023/2024 | 1st Year","sections":[{"title":"1- Choose the correct answer in the following sentences: (20 marks)","questions":[{"number":1,"type":"multiple_choice","question_text":"A wound on the cheek is a ......","options":[{"letter":"a","text":"scar","is_correct":true,"comment":"✅ صح – \"scar\" معناها ندبة، أثر الجرح."},{"letter":"b","text":"scare","is_correct":false,"comment":"❌ غلط – \"scare\" معناها خوف."},{"letter":"c","text":"scarf","is_correct":false,"comment":"❌ غلط – \"scarf\" معناها وشاح."},{"letter":"d","text":"scared","is_correct":false,"comment":"❌ غلط – \"scared\" صفة معناها خائف."}],"correct_answer":"a"},{"number":2,"type":"multiple_choice","question_text":"He carried his son over his ......","options":[{"letter":"a","text":"shoulder","is_correct":true,"comment":"✅ صح – الكتف هو اللي بيُحمل عليه الابن."},{"letter":"b","text":"ankle","is_correct":false,"comment":"❌ غلط – كاحل القدم، مش منطقي."},{"letter":"c","text":"forehead","is_correct":false,"comment":"❌ غلط – الجبين، مش منطقي."},{"letter":"d","text":"wrist","is_correct":false,"comment":"❌ غلط – المعصم، مش منطقي."}],"correct_answer":"a"},{"number":3,"type":"multiple_choice","question_text":"The ancient Egyptian used ...... to sweeten things.","options":[{"letter":"a","text":"sugar","is_correct":false,"comment":"❌ غلط – السكر لم يكن متاح بسهولة."},{"letter":"b","text":"honey","is_correct":true,"comment":"✅ صح – العسل كان المُحلي الأساسي."},{"letter":"c","text":"wine","is_correct":false,"comment":"❌ غلط – النبيذ مش للتحلية."},{"letter":"d","text":"beer","is_correct":false,"comment":"❌ غلط – البيرة مش للتحلية."}],"correct_answer":"b"},{"number":4,"type":"multiple_choice","question_text":"He took part in the bank ......","options":[{"letter":"a","text":"hijacking","is_correct":false,"comment":"❌ غلط – \"hijacking\" اختطاف طائرة."},{"letter":"b","text":"mugging","is_correct":false,"comment":"❌ غلط – \"mugging\" سرقة في الشارع."},{"letter":"c","text":"robbery","is_correct":true,"comment":"✅ صح – السطو على البنك اسمه \"bank robbery\"."},{"letter":"d","text":"blackmailing","is_correct":false,"comment":"❌ غلط – \"blackmailing\" ابتزاز."}],"correct_answer":"c"},{"number":5,"type":"multiple_choice","question_text":"This is the pen ...... I lost.","options":[{"letter":"a","text":"who","is_correct":false,"comment":"❌ غلط – \"who\" للعاقل."},{"letter":"b","text":"when","is_correct":false,"comment":"❌ غلط – \"when\" للزمان."},{"letter":"c","text":"which","is_correct":true,"comment":"✅ صح – \"which\" لغير العاقل، والقلم شيء."},{"letter":"d","text":"what","is_correct":false,"comment":"❌ غلط – \"what\" مش اسم موصول هنا."}],"correct_answer":"c"},{"number":6,"type":"multiple_choice","question_text":"Columbus ...... America.","options":[{"letter":"a","text":"made","is_correct":false,"comment":"❌ غلط – \"made\" معناها صنع."},{"letter":"b","text":"discovered","is_correct":true,"comment":"✅ صح – \"discovered\" معناها اكتشف."},{"letter":"c","text":"invented","is_correct":false,"comment":"❌ غلط – \"invented\" اخترع (لم يخترع أمريكا)."},{"letter":"d","text":"built","is_correct":false,"comment":"❌ غلط – \"built\" بنى."}],"correct_answer":"b"},{"number":7,"type":"multiple_choice","question_text":"Miss Nadia ...... us English.","options":[{"letter":"a","text":"tells","is_correct":false,"comment":"❌ غلط – \"tells\" تخبرنا، لكن مش المعنى المقصود."},{"letter":"b","text":"learns","is_correct":false,"comment":"❌ غلط – \"learns\" تتعلم."},{"letter":"c","text":"studies","is_correct":false,"comment":"❌ غلط – \"studies\" تدرس لنفسها."},{"letter":"d","text":"teaches","is_correct":true,"comment":"✅ صح – \"teaches\" تُدرّسنا."}],"correct_answer":"d"},{"number":8,"type":"multiple_choice","question_text":"Two trees ...... down in the storm last night.","options":[{"letter":"a","text":"were blowing","is_correct":false,"comment":"❌ غلط – كانوا بيعصفوا؟ مش منطقي."},{"letter":"b","text":"were blown","is_correct":true,"comment":"✅ صح – مبني للمجهول: الشجرتان أُسقطتا."},{"letter":"c","text":"were blow","is_correct":false,"comment":"❌ غلط – خطأ نحوي."},{"letter":"d","text":"blow","is_correct":false,"comment":"❌ غلط – مضارع."}],"correct_answer":"b"},{"number":9,"type":"multiple_choice","question_text":"Alex got away from the small green car by ......","options":[{"letter":"a","text":"driving very fast","is_correct":true,"comment":"✅ صح – الهرب كان بالقيادة بسرعة."},{"letter":"b","text":"checking the lights","is_correct":false,"comment":"❌ غلط – فحص الأضواء مش بيساعد على الهرب."},{"letter":"c","text":"waving to him","is_correct":false,"comment":"❌ غلط – التلويح مش سبب للهروب."},{"letter":"d","text":"stopping suddenly","is_correct":false,"comment":"❌ غلط – التوقف فجأة كان هيساعد العربية التانية تمسكه."}],"correct_answer":"a"},{"number":10,"type":"multiple_choice","question_text":"The driver of the small green car wanted to ......","options":[{"letter":"a","text":"talk to Alex","is_correct":true,"comment":"✅ صح (الأكثر منطقية) – السائق غالباً كان عايز يكلمه."},{"letter":"b","text":"help Alex","is_correct":false,"comment":"❌ غلط – المساعدة مش محتاجة مطاردة."},{"letter":"c","text":"annoy Alex","is_correct":false,"comment":"❌ غلط – ممكنة لكن مش الخيار الرئيسي."},{"letter":"d","text":"beat Alex","is_correct":false,"comment":"❌ غلط – ممكنة لكن \"talk\" هو المحايد."}],"correct_answer":"a"},{"number":11,"type":"multiple_choice","question_text":"Many houses ...... in the fire last week.","options":[{"letter":"a","text":"are destroyed","is_correct":false,"comment":"❌ غلط – مضارع."},{"letter":"b","text":"were destroyed","is_correct":true,"comment":"✅ صح – الماضي المبني للمجهول المناسب لـ \"last week\"."},{"letter":"c","text":"will be destroyed","is_correct":false,"comment":"❌ غلط – مستقبل."},{"letter":"d","text":"destroyed","is_correct":false,"comment":"❌ غلط – ناقصة فعل كون."}],"correct_answer":"b"},{"number":12,"type":"multiple_choice","question_text":"Katie won first prize in the ......","options":[{"letter":"a","text":"football match","is_correct":false,"comment":"❌ غلط – ماتش كرة القدم بيكسب كأس، مش جائزة أولى عادة."},{"letter":"b","text":"competition","is_correct":true,"comment":"✅ صح – المسابقة هي اللي فيها جائزة أولى."},{"letter":"c","text":"examination","is_correct":false,"comment":"❌ غلط – الامتحان بيدي درجات مش جوائز."},{"letter":"d","text":"test","is_correct":false,"comment":"❌ غلط – اختبار مش جائزة."}],"correct_answer":"b"},{"number":13,"type":"multiple_choice","question_text":"Did you hear them ...... poems.","options":[{"letter":"a","text":"reciting","is_correct":true,"comment":"✅ صح – \"hear\" + مفعول + -ing: سمعتهم وهم بيلقوا شعر."},{"letter":"b","text":"refusing","is_correct":false,"comment":"❌ غلط – بيرفضوا القصائد؟ مش منطقي."},{"letter":"c","text":"chopping","is_correct":false,"comment":"❌ غلط – يقطّعوا قصائد؟ مش منطقي."},{"letter":"d","text":"acting","is_correct":false,"comment":"❌ غلط – يمثلوا قصائد؟ أقل شيوعاً."}],"correct_answer":"a"},{"number":14,"type":"multiple_choice","question_text":"We heard them ...... all night.","options":[{"letter":"a","text":"laugh","is_correct":false,"comment":"❌ غلط – \"laugh\" لحدث قصير، لكن \"all night\" مدة طويلة."},{"letter":"b","text":"laughing","is_correct":true,"comment":"✅ صح – \"laughing\" للمستمر طوال الليل."},{"letter":"c","text":"laughed","is_correct":false,"comment":"❌ غلط – فعل ماضي."},{"letter":"d","text":"laughs","is_correct":false,"comment":"❌ غلط – مضارع."}],"correct_answer":"b"},{"number":15,"type":"multiple_choice","question_text":"Jane had not ...... The school for three years.","options":[{"letter":"a","text":"visit","is_correct":false,"comment":"❌ غلط – مصدر."},{"letter":"b","text":"visited","is_correct":true,"comment":"✅ صح – الماضي التام: had + تصريف ثالث."},{"letter":"c","text":"visiting","is_correct":false,"comment":"❌ غلط – مضارع مستمر."},{"letter":"d","text":"visits","is_correct":false,"comment":"❌ غلط – مضارع بسيط."}],"correct_answer":"b"},{"number":16,"type":"multiple_choice","question_text":"If I ...... you I would not worry about going to the university.","options":[{"letter":"a","text":"was","is_correct":false,"comment":"❌ غلط – مسموح في العامية لكن القاعدة الصارمة \"were\"."},{"letter":"b","text":"were","is_correct":true,"comment":"✅ صح – في الحالة الشرطية غير الحقيقية نستخدم \"were\" لكل الضمائر."},{"letter":"c","text":"am","is_correct":false,"comment":"❌ غلط – مضارع مش مناسب."},{"letter":"d","text":"is","is_correct":false,"comment":"❌ غلط – للغائب."}],"correct_answer":"b"},{"number":17,"type":"multiple_choice","question_text":"The day became warmer after the sun ......","options":[{"letter":"a","text":"rise","is_correct":false,"comment":"❌ غلط – مضارع."},{"letter":"b","text":"rose","is_correct":false,"comment":"❌ غلط – ماضي بسيط، لكن الماضي التام أدق للحدث الأسبق."},{"letter":"c","text":"had risen","is_correct":true,"comment":"✅ صح – \"after the sun had risen\" الشروق حصل قبل الدفء."},{"letter":"d","text":"rise","is_correct":false,"comment":"❌ غلط – مكرر."}],"correct_answer":"c"},{"number":18,"type":"multiple_choice","question_text":"Ted is ...... years old now.","options":[{"letter":"a","text":"fifteen","is_correct":true,"comment":"✅ صح – افتراضاً أكثر الأعمار شيوعاً في الأمثلة التعليمية."},{"letter":"b","text":"thirty-five","is_correct":false,"comment":"❌ غلط – كبير نسبياً."},{"letter":"c","text":"twenty","is_correct":false,"comment":"❌ غلط – محتملة لكن 15 أشهر."},{"letter":"d","text":"fifty-five","is_correct":false,"comment":"❌ غلط – غير منطقي."}],"correct_answer":"a"},{"number":19,"type":"multiple_choice","question_text":"The police found the bicycle after ......","options":[{"letter":"a","text":"20 days","is_correct":true,"comment":"✅ صح – مدة معقولة للعثور."},{"letter":"b","text":"20 weeks","is_correct":false,"comment":"❌ غلط – مدة طويلة."},{"letter":"c","text":"20 months","is_correct":false,"comment":"❌ غلط – طويلة جداً."},{"letter":"d","text":"20 years","is_correct":false,"comment":"❌ غلط – غير معقولة."}],"correct_answer":"a"},{"number":20,"type":"multiple_choice","question_text":"New laws are ...... every year.","options":[{"letter":"a","text":"published","is_correct":false,"comment":"❌ غلط – تُنشر، لكن المصطلح القانوني \"issued\"."},{"letter":"b","text":"introduced","is_correct":false,"comment":"❌ غلط – تُقدم، لكن الأصح \"تصدر\"."},{"letter":"c","text":"issued","is_correct":true,"comment":"✅ صح – القوانين تُصدر."},{"letter":"d","text":"entered","is_correct":false,"comment":"❌ غلط – مش المصطلح المعتاد."}],"correct_answer":"c"}]},{"title":"2- Say true or false in the following sentences: (15 marks)","questions":[{"number":1,"type":"true_false","statement":"The letters are written by him.","answer":true,"explanation":"True – صح: مبنى للمجهول سليم."},{"number":2,"type":"true_false","statement":"He manage to find his way.","answer":false,"explanation":"False – الغلط: الفعل يحتاج زمن: إما \"managed\" أو \"manages\"."},{"number":3,"type":"true_false","statement":"We went out with ours friend.","answer":false,"explanation":"False – الغلط: ضمير الملكية المتصل \"our\"، وليس \"ours\" التي تستخدم وحدها."},{"number":4,"type":"true_false","statement":"He came into the room while she walks out.","answer":false,"explanation":"False – الغلط: \"while\" + ماضي مستمر \"was walking\" مش مضارع."},{"number":5,"type":"true_false","statement":"I fail to solve the problem.","answer":true,"explanation":"True – صح: مقبولة نحوياً كمضارع بسيط."},{"number":6,"type":"true_false","statement":"He played tennis now.","answer":false,"explanation":"False – الغلط: \"now\" مع المضارع المستمر، مش الماضي."},{"number":7,"type":"true_false","statement":"These days she writes a new book.","answer":false,"explanation":"False – الغلط: \"These days\" تحتاج مضارع مستمر \"is writing\"."},{"number":8,"type":"true_false","statement":"The man looks strongly.","answer":false,"explanation":"False – الغلط: \"looks\" فعل ربط، يتبعه صفة \"strong\" مش ظرف."},{"number":9,"type":"true_false","statement":"He drinks coffee now.","answer":false,"explanation":"False – الغلط: \"now\" مع المضارع المستمر \"is drinking\"."},{"number":10,"type":"true_false","statement":"He bought a new car last week.","answer":true,"explanation":"True – صح: ماضي بسيط صحيح."},{"number":11,"type":"true_false","statement":"We are going to the cinema yesterday.","answer":false,"explanation":"False – الغلط: \"yesterday\" تتعارض مع المضارع المستمر."},{"number":12,"type":"true_false","statement":"It are cold in winter.","answer":false,"explanation":"False – الغلط: \"It\" مفرد، يبقى \"It is\"."},{"number":13,"type":"true_false","statement":"I sometimes go to the library.","answer":true,"explanation":"True – صح: ظرف التكرار في مكانه صحيح."},{"number":14,"type":"true_false","statement":"She goes to Alex two weeks ago.","answer":false,"explanation":"False – الغلط: \"ago\" مع الماضي، يبقى \"went\"."},{"number":15,"type":"true_false","statement":"I visited my aunt last week.","answer":true,"explanation":"True – صح: الماضي البسيط صحيح."}]}]},{"id":4,"header":"Sohag University | Faculty of Education\nEnglish Language | 1st Year (General + Commercial + Childhood) | June 2025","reading_passage":"These penguins are from South America. If you travel abroad to Argentina or Chile, you might be able to see a penguin colony. Today, the penguin in front is looking for advice from the other penguins. He is thinking about slipping down into a swimming pool. The penguin on the right is turning her head in disapproval. Meanwhile, little particles of dust are getting into the fur on the penguin's belly. This is just one of the daily intrigues that happen at SeaWorld. SeaWorld is a big park in California. Soon, these penguins will move around, and it will be impossible to see which is which. Maybe when they look at each other, it's like looking in the mirror!","sections":[{"title":"Q. No. 1 Answer the questions: (1 mark each)","questions":[{"number":1,"type":"multiple_choice","question_text":"Where do these penguins live now?","options":[{"letter":"A","text":"South America","is_correct":false,"comment":"❌ غلط – دي بلدهم الأصلي، مش المكان اللي عايشين فيه دلوقتي."},{"letter":"B","text":"Argentina","is_correct":false,"comment":"❌ غلط – واحدة من بلادهم الأصلية."},{"letter":"C","text":"Chile","is_correct":false,"comment":"❌ غلط – واحدة من بلادهم الأصلية."},{"letter":"D","text":"California","is_correct":true,"comment":"✅ صح – النص بيقول إنهم في SeaWorld بكاليفورنيا."}],"correct_answer":"D"},{"number":2,"type":"multiple_choice","question_text":"What does \"abroad\" mean?","options":[{"letter":"A","text":"on Broad Street","is_correct":false,"comment":"❌ غلط – تلاعب لفظي، مش معنى الكلمة."},{"letter":"B","text":"out of one's own country","is_correct":true,"comment":"✅ صح – \"abroad\" معناها خارج بلدك."},{"letter":"C","text":"in a neighboring country","is_correct":false,"comment":"❌ غلط – مش شرط بلد مجاور."},{"letter":"D","text":"next door","is_correct":false,"comment":"❌ غلط – مش معنى الكلمة."}],"correct_answer":"B"},{"number":3,"type":"multiple_choice","question_text":"What does \"intrigue\" mean?","options":[{"letter":"A","text":"a reason to cry","is_correct":false,"comment":"❌ غلط – مش سبب للبكاء."},{"letter":"B","text":"a hard life","is_correct":false,"comment":"❌ غلط – مش حياة صعبة."},{"letter":"C","text":"drama or mystery","is_correct":true,"comment":"✅ صح – الكلمة بتشير لأحداث فيها تشويق أو مكائد."},{"letter":"D","text":"involved","is_correct":false,"comment":"❌ غلط – ليست المعنى المباشر."}],"correct_answer":"C"},{"number":4,"type":"multiple_choice","question_text":"What does \"mirror\" mean?","options":[{"letter":"A","text":"a place where you see your reflection","is_correct":true,"comment":"✅ جزء من المعنى – المرآة الحقيقية."},{"letter":"B","text":"being or doing the same thing as another","is_correct":true,"comment":"✅ جزء من المعنى – التشابه الشديد."},{"letter":"C","text":"Both A and B","is_correct":true,"comment":"✅ صح – النص استخدم المعنيين."},{"letter":"D","text":"None of the above","is_correct":false,"comment":"❌ غلط – فيه معنى صحيح."}],"correct_answer":"C"},{"number":5,"type":"multiple_choice","question_text":"What does \"advice\" mean?","options":[{"letter":"A","text":"Ideas given to assist another","is_correct":true,"comment":"✅ صح – النصيحة هي آراء بنقدمها لمساعدة غيرنا."},{"letter":"B","text":"disapproval","is_correct":false,"comment":"❌ غلط – disapproval معناها استنكار."},{"letter":"C","text":"approval","is_correct":false,"comment":"❌ غلط – approval معناها موافقة."},{"letter":"D","text":"response to a question","is_correct":false,"comment":"❌ غلط – إجابة مش نصيحة."}],"correct_answer":"A"},{"number":6,"type":"multiple_choice","question_text":"Which is a FACT, not an opinion?","options":[{"letter":"A","text":"The penguin is looking for advice","is_correct":false,"comment":"❌ غلط – ده تفسير لسلوكه، مش حقيقة مثبتة."},{"letter":"B","text":"The other penguin disapproves","is_correct":false,"comment":"❌ غلط – ده تفسير لحركة رأسها."},{"letter":"C","text":"There is a lot of intrigue at SeaWorld","is_correct":false,"comment":"❌ غلط – ده رأي شخصي."},{"letter":"D","text":"none of the above","is_correct":true,"comment":"✅ صح – ولا واحدة منهم حقيقة قابلة للإثبات، كلها آراء."}],"correct_answer":"D"},{"number":7,"type":"multiple_choice","question_text":"SeaWorld is a big park in........","options":[{"letter":"A","text":"California","is_correct":true,"comment":"✅ صح – مذكور في النص مباشرة."},{"letter":"B","text":"Chile","is_correct":false,"comment":"❌ غلط – مش موجود."},{"letter":"C","text":"Canada","is_correct":false,"comment":"❌ غلط – مش موجود."},{"letter":"D","text":"South India","is_correct":false,"comment":"❌ غلط – مش موجود."}],"correct_answer":"A"}]},{"title":"Q. No. 2. Use the given words in the following blanks. (A. particles | B. advice | C. mirror | D. abroad)","questions":[{"number":8,"type":"fill_in_blank","sentence":"If you travel ______ to Argentina or Chile, you might see a penguin colony.","answer":"D. abroad","explanation":"الشرح: \"travel abroad\" = يسافر للخارج."},{"number":9,"type":"fill_in_blank","sentence":"Today, the penguin in front is looking for ______ from the other penguins.","answer":"B. advice","explanation":"الشرح: \"looking for advice\" = يبحث عن نصيحة."},{"number":10,"type":"fill_in_blank","sentence":"Meanwhile, little ______ of dust are getting into the fur on the penguin's belly.","answer":"A. particles","explanation":"الشرح: \"particles of dust\" = ذرات تراب."},{"number":11,"type":"fill_in_blank","sentence":"When they look at each other, it's like looking in the ______!","answer":"C. mirror","explanation":"الشرح: \"looking in the mirror\" = النظر في المرآة."}]},{"title":"Q. No. 3. Use the given words in the following blanks. (A. particles | B. advice | C. abroad | D. disapproval)","questions":[{"number":12,"type":"fill_in_blank","sentence":"She shook her head in ______.","answer":"D. disapproval","explanation":"الشرح: \"in disapproval\" = علامة رفض أو استنكار."},{"number":13,"type":"fill_in_blank","sentence":"If you want to travel ______, you should have a passport.","answer":"C. abroad","explanation":"الشرح: \"travel abroad\" = السفر للخارج."},{"number":14,"type":"fill_in_blank","sentence":"There were ______ of dust in the air.","answer":"A. particles","explanation":"الشرح: \"particles\" = جسيمات."},{"number":15,"type":"fill_in_blank","sentence":"When the air is polluted, it is a good piece of ______ to stay at home.","answer":"B. advice","explanation":"الشرح: \"a piece of advice\" = نصيحة."}]},{"title":"Q. No. 4 State whether the following sentences are TRUE or FALSE. (1 mark each)","questions":[{"number":1,"type":"true_false","statement":"\"A new broom sweeps clean\" ↔ \"الغربال الجديد له شدة\"","answer":true,"explanation":"True – الشرح: المثلان بنفس المعنى: الجديد دايمًا نشيط."},{"number":2,"type":"true_false","statement":"\"A friend in need is a friend indeed\" ↔ \"الصديق عند الضيق\"","answer":true,"explanation":"True – الشرح: ترجمة صحيحة ومعروفة."},{"number":3,"type":"true_false","statement":"\"فولة واتقسمت نصين\" ↔ \"A peanut and it broke in half\"","answer":false,"explanation":"False – الغلط: ترجمة حرفية مبتنقلش المعنى الاصطلاحي، الصحيح \"a storm in a teacup\" مثلًا."},{"number":4,"type":"true_false","statement":"\"Achilles' heel\" ↔ \"أبو العريف\"","answer":false,"explanation":"False – الغلط: \"أبو العريف\" = اللي يدّعي المعرفة، أما \"Achilles' heel\" معناها نقطة ضعف."},{"number":5,"type":"true_false","statement":"\"All cats are gray in the dark\" ↔ \"جميع القطط رمادية وقت الظلام\"","answer":true,"explanation":"True – الشرح: ترجمة صحيحة."},{"number":6,"type":"true_false","statement":"\"a know-it-all\" ↔ \"أم العريف\"","answer":true,"explanation":"True – الشرح: المقابل الشعبي الدقيق للشخص اللي بيتظاهر إنه يعرف كل حاجة."},{"number":7,"type":"true_false","statement":"\"fade into the sunset\" ↔ \"ما يأتي سهلا يذهب سريعا\"","answer":false,"explanation":"False – الغلط: العربي معناها \"Easy come, easy go\"، بينما الإنجليزي معناه يختفي تدريجيًا أو نهاية رومانسية."},{"number":8,"type":"true_false","statement":"\"Do lunch or be lunch\" ↔ \"تتغدي بيه قبل ما يتعشي بيك\"","answer":true,"explanation":"True – الشرح: المثل المصري بيطابق المعنى: إما تاكل غيرك أو تتاكل."},{"number":9,"type":"true_false","statement":"\"Charity begins at home\" ↔ \"خيركم خيركم لأهله\"","answer":true,"explanation":"True – الشرح: حديث شريف بنفس معنى البدء بالصدقة للأقربين."},{"number":10,"type":"true_false","statement":"\"Better safe than sorry\" ↔ \"الندم خير من الحذر\"","answer":false,"explanation":"False – الغلط: الترجمة معكوسة، الصواب: \"الحذر خير من الندم\"."}]},{"title":"السؤال المقالي: A. Put the following underlined verbs in the present progressive: (2 marks each)","questions":[{"number":1,"type":"sentence_transformation","original":"She (talk) to her sister right now.","transformed":"She is talking to her sister right now.","explanation":"الشرح: بنستخدم المضارع المستمر (is/am/are + v-ing) مع \"right now\"."},{"number":2,"type":"sentence_transformation","original":"She (eat) the sandwich at the moment.","transformed":"She is eating the sandwich at the moment.","explanation":"الشرح: \"at the moment\" دليل على المضارع المستمر."},{"number":3,"type":"sentence_transformation","original":"The teacher (explain) the lessons at the present.","transformed":"The teacher is explaining the lessons at the present.","explanation":"الشرح: الفاعل مفرد (The teacher) ياخد \"is\"."},{"number":4,"type":"sentence_transformation","original":"They (read) a book now.","transformed":"They are reading a book now.","explanation":"الشرح: \"They\" جمع، نستخدم معاه \"are\"."},{"number":5,"type":"sentence_transformation","original":"They (travel) next week.","transformed":"They are traveling next week.","explanation":"الشرح: المضارع المستمر بيستخدم كمان للتعبير عن خطط مؤكدة في المستقبل، و\"next week\" بتدل على كده."}]}],"closing_note":"BEST OF LUCK! DR. MOHAMMED OMAR"}]}];
+
+// ===== GLOBAL STATE =====
+const EXAMS = RAW_DATA[0].exams;
+let allQuestions = []; // flat list {examId, sectionIdx, qIdx, qData, elementRef}
+let uncertainSet = new Set(); // "examId-sectionIdx-qIdx"
+let focusQuestionIndex = 0;
+let focusModeActive = false;
+let showAllSolutions = false;
+let errorsOnlyMode = {}; // examId -> bool
+
+// ===== LOCAL STORAGE =====
+const LS_KEY = 'sohag_exam_answers_v2';
+function loadAnswers(){
+  try{ return JSON.parse(localStorage.getItem(LS_KEY)) || {}; }catch(e){ return {}; }
+}
+function saveAnswers(data){
+  try{ localStorage.setItem(LS_KEY, JSON.stringify(data)); }catch(e){}
+}
+let savedAnswers = loadAnswers();
+
+// ===== TOAST =====
+function showToast(msg, type='', duration=2800){
+  const tc = document.getElementById('toast-container');
+  const t = document.createElement('div');
+  t.className = 'toast' + (type ? ' toast-'+type : '');
+  t.innerHTML = msg;
+  tc.appendChild(t);
+  setTimeout(()=>{
+    t.style.animation='toastOut 0.3s ease forwards';
+    setTimeout(()=>t.remove(), 300);
+  }, duration);
+}
+
+// ===== PROCESS PASSAGE =====
+function processPassage(text){
+  if(!text) return '';
+  // highlight ==word==
+  let processed = text.replace(/==([^=]+)==/g, '<span class="highlight-word">$1</span>');
+  // Convert newlines to paragraphs
+  const paragraphs = processed.split(/\n\n+/);
+  if(paragraphs.length > 1){
+    return paragraphs.map(p => `<p>${p.replace(/\n/g,'<br>')}</p>`).join('');
+  }
+  return processed.replace(/\n/g,'<br>');
+}
+
+// ===== SAVE/LOAD SINGLE ANSWER =====
+function getAnswerKey(examId, sectionIdx, qIdx){
+  return `${examId}_${sectionIdx}_${qIdx}`;
+}
+function saveAnswer(examId, sectionIdx, qIdx, value){
+  const key = getAnswerKey(examId, sectionIdx, qIdx);
+  if(!savedAnswers[examId]) savedAnswers[examId]={};
+  if(!savedAnswers[examId][sectionIdx]) savedAnswers[examId][sectionIdx]={};
+  savedAnswers[examId][sectionIdx][qIdx] = value;
+  saveAnswers(savedAnswers);
+}
+function getAnswer(examId, sectionIdx, qIdx){
+  try{ return savedAnswers[examId][sectionIdx][qIdx]; }catch(e){ return null; }
+}
+
+// ===== BUILD EXAM CARD =====
+function buildExamCard(exam){
+  const card = document.createElement('div');
+  card.className = 'exam-card';
+  card.id = `exam-${exam.id}`;
+
+  // --- HEADER ---
+  const header = document.createElement('div');
+  header.className = 'exam-header';
+  header.innerHTML = `
+    <div class="exam-title-row">
+      <div>
+        <div class="exam-badge"><i class="fas fa-graduation-cap"></i> امتحان رقم ${exam.id}</div>
+        <div class="exam-header-text">${exam.header}</div>
+      </div>
+      <div class="exam-controls-top">
+        <button class="btn-icon" title="وضع التركيز" data-exam="${exam.id}" data-action="focus">
+          <i class="fas fa-crosshairs"></i>
+        </button>
+        <button class="btn-icon" title="عرض الأخطاء فقط" data-exam="${exam.id}" data-action="errors-only" id="btn-errors-${exam.id}">
+          <i class="fas fa-filter"></i>
+        </button>
+        <button class="btn-icon" title="طي/فتح" data-exam="${exam.id}" data-action="collapse">
+          <i class="fas fa-chevron-up"></i>
+        </button>
+      </div>
+    </div>
+  `;
+  card.appendChild(header);
+
+  // --- PROGRESS BAR ---
+  const progressWrap = document.createElement('div');
+  progressWrap.className = 'progress-wrap';
+  progressWrap.innerHTML = `
+    <div class="progress-info">
+      <span>التقدم في الإجابة</span>
+      <span id="progress-text-${exam.id}">0 / 0 سؤال</span>
+    </div>
+    <div class="progress-bar-outer">
+      <div class="progress-bar-inner" id="progress-bar-${exam.id}" style="width:0%"></div>
+    </div>
+  `;
+  card.appendChild(progressWrap);
+
+  // --- COLLAPSIBLE BODY ---
+  const body = document.createElement('div');
+  body.id = `exam-body-${exam.id}`;
+
+  // --- PASSAGE ---
+  if(exam.reading_passage){
+    const passWrap = document.createElement('div');
+    passWrap.className = 'passage-wrap';
+    passWrap.innerHTML = `
+      <div class="passage-title"><i class="fas fa-book-open"></i> فقرة القراءة</div>
+      <div class="passage-text">${processPassage(exam.reading_passage)}</div>
+    `;
+    body.appendChild(passWrap);
+  }
+
+  // --- SECTIONS ---
+  exam.sections.forEach((section, sIdx) => {
+    const secWrap = document.createElement('div');
+    secWrap.className = 'section-wrap';
+
+    const secTitle = document.createElement('div');
+    secTitle.className = 'section-title';
+    secTitle.innerHTML = `<i class="fas fa-list-check"></i> ${section.title}`;
+    secWrap.appendChild(secTitle);
+
+    section.questions.forEach((q, qIdx) => {
+      const qEl = buildQuestionElement(exam.id, sIdx, qIdx, q);
+      secWrap.appendChild(qEl);
+      // register in flat list
+      allQuestions.push({examId: exam.id, sectionIdx: sIdx, qIdx: qIdx, qData: q, element: qEl});
+    });
+
+    body.appendChild(secWrap);
+  });
+
+  // --- CLOSING NOTE ---
+  if(exam.closing_note){
+    const note = document.createElement('div');
+    note.className = 'closing-note';
+    note.innerHTML = `<i class="fas fa-star" style="color:var(--gold)"></i> ${exam.closing_note}`;
+    body.appendChild(note);
+  }
+
+  card.appendChild(body);
+
+  // --- CONTROLS ---
+  const controls = document.createElement('div');
+  controls.className = 'exam-controls';
+  controls.innerHTML = `
+    <div class="controls-left">
+      <button class="btn-primary" data-exam="${exam.id}" data-action="check">
+        <i class="fas fa-check-double"></i> تحقق من الإجابات
+      </button>
+      <button class="btn-gold" data-exam="${exam.id}" data-action="solutions">
+        <i class="fas fa-lightbulb"></i> إظهار الحلول
+      </button>
+    </div>
+    <div class="controls-right">
+      <div class="score-display" id="score-${exam.id}">
+        <i class="fas fa-star"></i> <span></span>
+      </div>
+      <button class="btn-outline btn-orange" data-exam="${exam.id}" data-action="errors">
+        <i class="fas fa-bug"></i> عرض الأخطاء فقط
+      </button>
+      <button class="btn-outline btn-red" data-exam="${exam.id}" data-action="reset">
+        <i class="fas fa-redo"></i> إعادة تعيين
+      </button>
+    </div>
+  `;
+  card.appendChild(controls);
+
+  return card;
+}
+
+// ===== BUILD QUESTION ELEMENT =====
+function buildQuestionElement(examId, sIdx, qIdx, q){
+  const qEl = document.createElement('div');
+  qEl.className = 'question-item';
+  qEl.id = `q-${examId}-${sIdx}-${qIdx}`;
+  qEl.dataset.examId = examId;
+  qEl.dataset.sectionIdx = sIdx;
+  qEl.dataset.qIdx = qIdx;
+  qEl.dataset.type = q.type;
+
+  const unsureKey = `${examId}-${sIdx}-${qIdx}`;
+  const isUnsure = uncertainSet.has(unsureKey);
+
+  // --- TOP ---
+  const top = document.createElement('div');
+  top.className = 'question-top';
+
+  const numEl = document.createElement('div');
+  numEl.className = 'question-num';
+  numEl.textContent = q.number;
+  top.appendChild(numEl);
+
+  const textWrap = document.createElement('div');
+  textWrap.className = 'question-text-wrap';
+
+  if(q.type === 'multiple_choice' || q.type === 'fill_in_blank'){
+    const qt = document.createElement('div');
+    qt.className = 'question-text';
+    qt.textContent = q.question_text || q.sentence || '';
+    textWrap.appendChild(qt);
+  } else if(q.type === 'true_false'){
+    const qt = document.createElement('div');
+    qt.className = 'question-text';
+    qt.textContent = 'صح / خطأ:';
+    textWrap.appendChild(qt);
+  } else if(q.type === 'sentence_transformation'){
+    const qt = document.createElement('div');
+    qt.className = 'question-text';
+    qt.textContent = 'حوّل الجملة إلى المضارع المستمر:';
+    textWrap.appendChild(qt);
+  }
+  top.appendChild(textWrap);
+
+  const actions = document.createElement('div');
+  actions.className = 'question-actions';
+  const unsureBtn = document.createElement('button');
+  unsureBtn.className = 'btn-unsure' + (isUnsure ? ' marked' : '');
+  unsureBtn.title = 'علّم للمراجعة';
+  unsureBtn.innerHTML = `<i class="fas fa-${isUnsure?'bookmark':'bookmark'}" style="color:${isUnsure?'var(--gold)':'inherit'}"></i> غير متأكد`;
+  unsureBtn.dataset.key = unsureKey;
+  unsureBtn.addEventListener('click', ()=>toggleUnsure(unsureKey, unsureBtn));
+  actions.appendChild(unsureBtn);
+  top.appendChild(actions);
+
+  qEl.appendChild(top);
+
+  // --- BODY based on type ---
+  if(q.type === 'multiple_choice'){
+    buildMCQ(qEl, examId, sIdx, qIdx, q);
+  } else if(q.type === 'true_false'){
+    buildTF(qEl, examId, sIdx, qIdx, q);
+  } else if(q.type === 'fill_in_blank'){
+    buildFIB(qEl, examId, sIdx, qIdx, q);
+  } else if(q.type === 'sentence_transformation'){
+    buildST(qEl, examId, sIdx, qIdx, q);
+  }
+
+  // --- FEEDBACK ---
+  const fbWrap = document.createElement('div');
+  fbWrap.className = 'feedback-wrap';
+  fbWrap.id = `fb-${examId}-${sIdx}-${qIdx}`;
+  qEl.appendChild(fbWrap);
+
+  return qEl;
+}
+
+// ===== MCQ =====
+function buildMCQ(qEl, examId, sIdx, qIdx, q){
+  const optsWrap = document.createElement('div');
+  optsWrap.className = 'options-wrap';
+  const savedVal = getAnswer(examId, sIdx, qIdx);
+
+  q.options.forEach((opt, oIdx) => {
+    const optEl = document.createElement('label');
+    optEl.className = 'option-item' + (savedVal===opt.letter ? ' selected' : '');
+    optEl.innerHTML = `
+      <input type="radio" name="q-${examId}-${sIdx}-${qIdx}" value="${opt.letter}" ${savedVal===opt.letter?'checked':''}>
+      <span class="option-letter">${opt.letter}</span>
+      <span class="option-text">${opt.text}</span>
+    `;
+    const radio = optEl.querySelector('input');
+    radio.addEventListener('change', ()=>{
+      optsWrap.querySelectorAll('.option-item').forEach(o=>o.classList.remove('selected'));
+      optEl.classList.add('selected');
+      saveAnswer(examId, sIdx, qIdx, opt.letter);
+      updateProgress(examId);
+      updateGlobalStats();
+    });
+    optsWrap.appendChild(optEl);
+  });
+  qEl.appendChild(optsWrap);
+}
+
+// ===== TRUE/FALSE =====
+function buildTF(qEl, examId, sIdx, qIdx, q){
+  const tfWrap = document.createElement('div');
+  tfWrap.className = 'tf-wrap';
+
+  const stmt = document.createElement('div');
+  stmt.className = 'tf-statement';
+  stmt.textContent = q.statement;
+  tfWrap.appendChild(stmt);
+
+  const savedVal = getAnswer(examId, sIdx, qIdx);
+  const btns = document.createElement('div');
+  btns.className = 'tf-btns';
+
+  const trueBtn = document.createElement('button');
+  trueBtn.className = 'btn-tf true-btn' + (savedVal==='true'?' selected':'');
+  trueBtn.textContent = '✓ صح';
+  trueBtn.dataset.val = 'true';
+
+  const falseBtn = document.createElement('button');
+  falseBtn.className = 'btn-tf false-btn' + (savedVal==='false'?' selected':'');
+  falseBtn.textContent = '✗ خطأ';
+  falseBtn.dataset.val = 'false';
+
+  [trueBtn, falseBtn].forEach(btn => {
+    btn.addEventListener('click', ()=>{
+      btns.querySelectorAll('.btn-tf').forEach(b=>b.classList.remove('selected'));
+      btn.classList.add('selected');
+      saveAnswer(examId, sIdx, qIdx, btn.dataset.val);
+      updateProgress(examId);
+      updateGlobalStats();
+    });
+  });
+
+  btns.appendChild(trueBtn);
+  btns.appendChild(falseBtn);
+  tfWrap.appendChild(btns);
+  qEl.appendChild(tfWrap);
+}
+
+// ===== FILL IN BLANK =====
+function buildFIB(qEl, examId, sIdx, qIdx, q){
+  const fibWrap = document.createElement('div');
+  fibWrap.className = 'fib-wrap';
+
+  const sent = document.createElement('div');
+  sent.className = 'fib-sentence';
+  sent.textContent = q.sentence;
+  fibWrap.appendChild(sent);
+
+  const savedVal = getAnswer(examId, sIdx, qIdx) || '';
+  const inp = document.createElement('input');
+  inp.type = 'text';
+  inp.className = 'fib-input';
+  inp.placeholder = 'اكتب إجابتك هنا...';
+  inp.value = savedVal;
+  inp.id = `fib-${examId}-${sIdx}-${qIdx}`;
+  inp.addEventListener('input', ()=>{
+    saveAnswer(examId, sIdx, qIdx, inp.value);
+    updateProgress(examId);
+    updateGlobalStats();
+  });
+  fibWrap.appendChild(inp);
+  qEl.appendChild(fibWrap);
+}
+
+// ===== SENTENCE TRANSFORMATION =====
+function buildST(qEl, examId, sIdx, qIdx, q){
+  const stWrap = document.createElement('div');
+  stWrap.className = 'st-wrap';
+
+  const orig = document.createElement('div');
+  orig.className = 'st-original';
+  orig.innerHTML = `<strong>الجملة الأصلية:</strong> ${q.original}`;
+  stWrap.appendChild(orig);
+
+  const savedVal = getAnswer(examId, sIdx, qIdx) || '';
+  const ta = document.createElement('textarea');
+  ta.className = 'st-textarea';
+  ta.placeholder = 'اكتب الجملة المحوّلة هنا...';
+  ta.value = savedVal;
+  ta.id = `st-${examId}-${sIdx}-${qIdx}`;
+  ta.addEventListener('input', ()=>{
+    saveAnswer(examId, sIdx, qIdx, ta.value);
+    updateProgress(examId);
+    updateGlobalStats();
+  });
+  stWrap.appendChild(ta);
+  qEl.appendChild(stWrap);
+}
+
+// ===== CHECK ANSWERS =====
+function checkExam(examId){
+  const exam = EXAMS.find(e=>e.id===examId);
+  if(!exam) return;
+  let correct=0, total=0;
+  exam.sections.forEach((sec, sIdx)=>{
+    sec.questions.forEach((q, qIdx)=>{
+      const qEl = document.getElementById(`q-${examId}-${sIdx}-${qIdx}`);
+      const fbWrap = document.getElementById(`fb-${examId}-${sIdx}-${qIdx}`);
+      if(!qEl||!fbWrap) return;
+      total++;
+      fbWrap.style.display='block';
+      fbWrap.innerHTML='';
+      const ans = getAnswer(examId, sIdx, qIdx);
+
+      if(q.type==='multiple_choice'){
+        const isCorrect = ans === q.correct_answer;
+        qEl.classList.remove('correct-q','wrong-q');
+        qEl.classList.add(isCorrect?'correct-q':'wrong-q');
+        // Style options
+        const opts = qEl.querySelectorAll('.option-item');
+        opts.forEach(opt=>{
+          opt.classList.remove('correct-opt','wrong-opt');
+          const radio = opt.querySelector('input');
+          if(!radio) return;
+          const letter = radio.value;
+          const optData = q.options.find(o=>o.letter===letter);
+          if(optData && optData.is_correct) opt.classList.add('correct-opt');
+          else if(letter===ans && !optData?.is_correct) opt.classList.add('wrong-opt');
+        });
+        // Feedback
+        const chosenOpt = q.options.find(o=>o.letter===ans);
+        const correctOpt = q.options.find(o=>o.is_correct);
+        if(isCorrect){
+          correct++;
+          fbWrap.innerHTML = `<div class="feedback-item correct-fb"><i class="fas fa-check-circle"></i> ${chosenOpt?.comment||'✅ إجابة صحيحة'}</div>`;
+        } else {
+          let html = ans ? `<div class="feedback-item wrong-fb"><i class="fas fa-times-circle"></i> ${chosenOpt?.comment||'❌ إجابة خاطئة'}</div>` : `<div class="feedback-item wrong-fb"><i class="fas fa-circle-exclamation"></i> لم تختر إجابة</div>`;
+          if(correctOpt) html += `<div class="feedback-correct-ans"><i class="fas fa-star" style="color:var(--green)"></i> الإجابة الصحيحة: (${correctOpt.letter}) ${correctOpt.text}</div>`;
+          fbWrap.innerHTML = html;
+        }
+      } else if(q.type==='true_false'){
+        const userAns = ans;
+        const correctAns = q.answer.toString();
+        const isCorrect = userAns === correctAns;
+        qEl.classList.remove('correct-q','wrong-q');
+        qEl.classList.add(isCorrect?'correct-q':'wrong-q');
+        // Style buttons
+        const tfBtns = qEl.querySelectorAll('.btn-tf');
+        tfBtns.forEach(btn=>{
+          btn.classList.remove('correct-tf','wrong-tf');
+          if(btn.dataset.val===correctAns) btn.classList.add('correct-tf');
+          else if(btn.dataset.val===userAns && !isCorrect) btn.classList.add('wrong-tf');
+        });
+        if(isCorrect){
+          correct++;
+          fbWrap.innerHTML = `<div class="feedback-item correct-fb"><i class="fas fa-check-circle"></i> ✅ ${q.explanation}</div>`;
+        } else {
+          const corrText = q.answer ? 'صح ✓' : 'خطأ ✗';
+          fbWrap.innerHTML = `<div class="feedback-item wrong-fb"><i class="fas fa-times-circle"></i> ❌ ${userAns ? (userAns==='true'?'اخترت: صح':'اخترت: خطأ') : 'لم تختر'}</div>
+          <div class="feedback-correct-ans"><i class="fas fa-star" style="color:var(--green)"></i> الإجابة الصحيحة: ${corrText} — ${q.explanation}</div>`;
+        }
+      } else if(q.type==='fill_in_blank'){
+        const inp = document.getElementById(`fib-${examId}-${sIdx}-${qIdx}`);
+        const userVal = (ans||'').trim().toLowerCase();
+        const correctVal = q.answer.toLowerCase();
+        const isCorrect = userVal && correctVal.includes(userVal) || userVal === correctVal;
+        qEl.classList.remove('correct-q','wrong-q');
+        qEl.classList.add(isCorrect?'correct-q':'wrong-q');
+        if(inp){ inp.classList.remove('correct-fib','wrong-fib'); inp.classList.add(isCorrect?'correct-fib':'wrong-fib'); }
+        if(isCorrect){
+          correct++;
+          fbWrap.innerHTML = `<div class="feedback-item correct-fb"><i class="fas fa-check-circle"></i> ✅ إجابة صحيحة! ${q.explanation}</div>`;
+        } else {
+          fbWrap.innerHTML = `<div class="feedback-item wrong-fb"><i class="fas fa-times-circle"></i> ❌ إجابة خاطئة أو فارغة</div>
+          <div class="feedback-correct-ans"><i class="fas fa-star" style="color:var(--green)"></i> الإجابة الصحيحة: ${q.answer} — ${q.explanation}</div>`;
+        }
+      } else if(q.type==='sentence_transformation'){
+        const ta = document.getElementById(`st-${examId}-${sIdx}-${qIdx}`);
+        const userVal = (ans||'').trim().toLowerCase();
+        const correctVal = q.transformed.toLowerCase();
+        const isCorrect = userVal && (userVal===correctVal || correctVal.includes(userVal.split(' ').slice(1).join(' ')));
+        qEl.classList.remove('correct-q','wrong-q');
+        qEl.classList.add(isCorrect?'correct-q':'wrong-q');
+        if(ta){ ta.classList.remove('correct-st','wrong-st'); ta.classList.add(isCorrect?'correct-st':'wrong-st'); }
+        if(isCorrect){
+          correct++;
+          fbWrap.innerHTML = `<div class="feedback-item correct-fb"><i class="fas fa-check-circle"></i> ✅ ممتاز! ${q.explanation}</div>`;
+        } else {
+          fbWrap.innerHTML = `<div class="feedback-item wrong-fb"><i class="fas fa-times-circle"></i> ❌ ${ans ? 'إجابة غير دقيقة' : 'لم تكتب إجابة'}</div>
+          <div class="feedback-correct-ans"><i class="fas fa-star" style="color:var(--green)"></i> الإجابة الصحيحة: ${q.transformed} — ${q.explanation}</div>`;
+        }
+      }
+    });
+  });
+
+  // Show score
+  const scoreEl = document.getElementById(`score-${examId}`);
+  if(scoreEl){
+    const pct = total > 0 ? Math.round((correct/total)*100) : 0;
+    const emoji = pct>=80?'🏆':pct>=60?'👍':pct>=40?'📚':'💪';
+    scoreEl.style.display='flex';
+    scoreEl.querySelector('span').textContent = `النتيجة: ${correct}/${total} (${pct}%) ${emoji}`;
+  }
+  updateGlobalStats();
+  showToast(`<i class="fas fa-check-double"></i> تم التصحيح! النتيجة: ${correct}/${total}`, correct===total?'success':'', 3000);
+}
+
+// ===== SHOW SOLUTIONS =====
+function showExamSolutions(examId){
+  const exam = EXAMS.find(e=>e.id===examId);
+  if(!exam) return;
+  exam.sections.forEach((sec, sIdx)=>{
+    sec.questions.forEach((q, qIdx)=>{
+      const fbWrap = document.getElementById(`fb-${examId}-${sIdx}-${qIdx}`);
+      if(!fbWrap) return;
+      fbWrap.style.display='block';
+      if(q.type==='multiple_choice'){
+        const correctOpt = q.options.find(o=>o.is_correct);
+        fbWrap.innerHTML = `<div class="feedback-item correct-fb"><i class="fas fa-lightbulb"></i> الإجابة الصحيحة: (${correctOpt?.letter}) ${correctOpt?.text} — ${correctOpt?.comment||''}</div>`;
+        // Highlight correct option
+        const qEl = document.getElementById(`q-${examId}-${sIdx}-${qIdx}`);
+        if(qEl){
+          qEl.querySelectorAll('.option-item').forEach(opt=>{
+            const radio = opt.querySelector('input');
+            if(radio && q.options.find(o=>o.letter===radio.value && o.is_correct)) opt.classList.add('correct-opt');
+          });
+        }
+      } else if(q.type==='true_false'){
+        const corrText = q.answer ? 'صح ✓' : 'خطأ ✗';
+        fbWrap.innerHTML = `<div class="feedback-item correct-fb"><i class="fas fa-lightbulb"></i> الإجابة: ${corrText} — ${q.explanation}</div>`;
+      } else if(q.type==='fill_in_blank'){
+        fbWrap.innerHTML = `<div class="feedback-item correct-fb"><i class="fas fa-lightbulb"></i> الإجابة: ${q.answer} — ${q.explanation}</div>`;
+      } else if(q.type==='sentence_transformation'){
+        fbWrap.innerHTML = `<div class="feedback-item correct-fb"><i class="fas fa-lightbulb"></i> الإجابة: ${q.transformed} — ${q.explanation}</div>`;
+      }
+    });
+  });
+  showToast('<i class="fas fa-lightbulb"></i> تم عرض جميع الحلول', 'gold');
+}
+
+// ===== RESET EXAM =====
+function resetExam(examId){
+  const exam = EXAMS.find(e=>e.id===examId);
+  if(!exam) return;
+  exam.sections.forEach((sec, sIdx)=>{
+    sec.questions.forEach((q, qIdx)=>{
+      const qEl = document.getElementById(`q-${examId}-${sIdx}-${qIdx}`);
+      const fbWrap = document.getElementById(`fb-${examId}-${sIdx}-${qIdx}`);
+      if(!qEl||!fbWrap) return;
+      qEl.classList.remove('correct-q','wrong-q');
+      fbWrap.style.display='none';
+      fbWrap.innerHTML='';
+
+      if(q.type==='multiple_choice'){
+        qEl.querySelectorAll('input[type="radio"]').forEach(r=>r.checked=false);
+        qEl.querySelectorAll('.option-item').forEach(o=>o.classList.remove('selected','correct-opt','wrong-opt'));
+      } else if(q.type==='true_false'){
+        qEl.querySelectorAll('.btn-tf').forEach(b=>b.classList.remove('selected','correct-tf','wrong-tf'));
+      } else if(q.type==='fill_in_blank'){
+        const inp = document.getElementById(`fib-${examId}-${sIdx}-${qIdx}`);
+        if(inp){ inp.value=''; inp.classList.remove('correct-fib','wrong-fib'); }
+      } else if(q.type==='sentence_transformation'){
+        const ta = document.getElementById(`st-${examId}-${sIdx}-${qIdx}`);
+        if(ta){ ta.value=''; ta.classList.remove('correct-st','wrong-st'); }
+      }
+    });
+  });
+  // Clear saved answers for this exam
+  if(savedAnswers[examId]) { delete savedAnswers[examId]; saveAnswers(savedAnswers); }
+  const scoreEl = document.getElementById(`score-${examId}`);
+  if(scoreEl) scoreEl.style.display='none';
+  updateProgress(examId);
+  updateGlobalStats();
+  showToast('<i class="fas fa-redo"></i> تم إعادة التعيين', 'error');
+}
+
+// ===== PROGRESS =====
+function updateProgress(examId){
+  const exam = EXAMS.find(e=>e.id===examId);
+  if(!exam) return;
+  let total=0, answered=0;
+  exam.sections.forEach((sec, sIdx)=>{
+    sec.questions.forEach((q, qIdx)=>{
+      total++;
+      const ans = getAnswer(examId, sIdx, qIdx);
+      if(q.type==='multiple_choice' && ans) answered++;
+      else if(q.type==='true_false' && ans) answered++;
+      else if(q.type==='fill_in_blank' && ans && ans.trim()) answered++;
+      else if(q.type==='sentence_transformation' && ans && ans.trim()) answered++;
+    });
+  });
+  const pct = total>0 ? Math.round((answered/total)*100) : 0;
+  const bar = document.getElementById(`progress-bar-${examId}`);
+  const txt = document.getElementById(`progress-text-${examId}`);
+  if(bar) bar.style.width=pct+'%';
+  if(txt) txt.textContent=`${answered} / ${total} سؤال`;
+}
+
+// ===== GLOBAL STATS =====
+function updateGlobalStats(){
+  let totalQ=0, answeredQ=0, uncertainCount=uncertainSet.size;
+  EXAMS.forEach(exam=>{
+    exam.sections.forEach((sec, sIdx)=>{
+      sec.questions.forEach((q, qIdx)=>{
+        totalQ++;
+        const ans = getAnswer(exam.id, sIdx, qIdx);
+        if(ans && (q.type!=='fill_in_blank' || ans.trim()) && (q.type!=='sentence_transformation' || ans.trim())) answeredQ++;
+      });
+    });
+  });
+  const unanswered = totalQ - answeredQ;
+  document.getElementById('total-score-display').textContent = '-';
+  document.getElementById('total-correct').textContent = '—';
+  document.getElementById('total-wrong').textContent = '—';
+  document.getElementById('total-unanswered').textContent = unanswered;
+  document.getElementById('total-uncertain').textContent = uncertainCount;
+  const badge = document.getElementById('uncertain-count');
+  if(badge) badge.textContent = uncertainCount > 0 ? ` (${uncertainCount})` : '';
+}
+
+// ===== UNCERTAIN (UNSURE) =====
+function toggleUnsure(key, btn){
+  if(uncertainSet.has(key)){
+    uncertainSet.delete(key);
+    btn.classList.remove('marked');
+    btn.innerHTML = `<i class="fas fa-bookmark"></i> غير متأكد`;
+    showToast('<i class="fas fa-bookmark"></i> تم إزالة العلامة', '');
+  } else {
+    uncertainSet.add(key);
+    btn.classList.add('marked');
+    btn.innerHTML = `<i class="fas fa-bookmark" style="color:var(--gold)"></i> غير متأكد`;
+    showToast('<i class="fas fa-bookmark" style="color:var(--gold)"></i> تم وضع علامة للمراجعة', 'gold');
+  }
+  updateGlobalStats();
+  updateReviewPanel();
+}
+
+function updateReviewPanel(){
+  const panel = document.getElementById('review-panel');
+  const list = document.getElementById('review-list-items');
+  if(!panel||!list) return;
+  if(uncertainSet.size===0){
+    panel.style.display='none';
+    return;
+  }
+  panel.style.display='block';
+  list.innerHTML='';
+  uncertainSet.forEach(key=>{
+    const [examId, sIdx, qIdx] = key.split('-').map(Number);
+    const exam = EXAMS.find(e=>e.id===examId);
+    if(!exam) return;
+    const sec = exam.sections[sIdx];
+    if(!sec) return;
+    const q = sec.questions[qIdx];
+    if(!q) return;
+    const chip = document.createElement('div');
+    chip.className = 'review-chip';
+    chip.innerHTML = `<i class="fas fa-bookmark"></i> امتحان ${examId} - س${q.number}`;
+    chip.addEventListener('click',()=>{
+      const qEl = document.getElementById(`q-${examId}-${sIdx}-${qIdx}`);
+      if(qEl){ qEl.scrollIntoView({behavior:'smooth',block:'center'}); qEl.style.outline='3px solid var(--gold)'; setTimeout(()=>qEl.style.outline='',2000); }
+    });
+    list.appendChild(chip);
+  });
+}
+
+// ===== SHOW/HIDE ALL SOLUTIONS =====
+function toggleAllSolutions(){
+  showAllSolutions = !showAllSolutions;
+  if(showAllSolutions){
+    EXAMS.forEach(exam=>showExamSolutions(exam.id));
+    showToast('<i class="fas fa-eye"></i> تم عرض جميع حلول الامتحانات', 'gold', 3000);
+  } else {
+    EXAMS.forEach(exam=>{
+      exam.sections.forEach((sec, sIdx)=>{
+        sec.questions.forEach((q, qIdx)=>{
+          const fbWrap = document.getElementById(`fb-${exam.id}-${sIdx}-${qIdx}`);
+          if(fbWrap){ fbWrap.style.display='none'; fbWrap.innerHTML=''; }
+        });
+      });
+    });
+    showToast('<i class="fas fa-eye-slash"></i> تم إخفاء الحلول', '');
+  }
+  const btn = document.getElementById('btn-show-all-solutions');
+  if(btn) btn.classList.toggle('active', showAllSolutions);
+}
+
+// ===== ERRORS ONLY MODE =====
+function toggleErrorsOnly(examId){
+  errorsOnlyMode[examId] = !errorsOnlyMode[examId];
+  const card = document.getElementById(`exam-${examId}`);
+  if(!card) return;
+  if(errorsOnlyMode[examId]){
+    card.classList.add('errors-mode');
+    showToast('<i class="fas fa-filter"></i> يعرض الأخطاء فقط', 'error');
+  } else {
+    card.classList.remove('errors-mode');
+    showToast('<i class="fas fa-filter"></i> يعرض جميع الأسئلة', '');
+  }
+  const btnTop = document.querySelector(`[data-exam="${examId}"][data-action="errors-only"]`);
+  if(btnTop) btnTop.classList.toggle('active', errorsOnlyMode[examId]);
+}
+
+// ===== COLLAPSE =====
+function collapseExam(examId, btn){
+  const body = document.getElementById(`exam-body-${examId}`);
+  if(!body) return;
+  const isHidden = body.style.display==='none';
+  body.style.display = isHidden?'':'none';
+  const icon = btn.querySelector('i');
+  if(icon) icon.className = isHidden?'fas fa-chevron-up':'fas fa-chevron-down';
+}
+
+// ===== FOCUS MODE =====
+function openFocusMode(examId){
+  // gather all questions for this exam
+  const examQs = allQuestions.filter(q=>q.examId===examId);
+  if(!examQs.length){ showToast('لا توجد أسئلة!', 'error'); return; }
+  focusModeActive = true;
+  focusQuestionIndex = 0;
+  renderFocusQuestion(examQs, 0);
+  buildFocusDots(examQs);
+  document.getElementById('focus-overlay').classList.add('active');
+  document.getElementById('focus-title').innerHTML = `<i class="fas fa-crosshairs" style="color:var(--gold)"></i> وضع التركيز — امتحان ${examId}`;
+  
+  // Nav buttons
+  document.getElementById('focus-prev').addEventListener('click',()=>{
+    if(focusQuestionIndex>0){ focusQuestionIndex--; renderFocusQuestion(examQs, focusQuestionIndex); buildFocusDots(examQs, focusQuestionIndex); }
+  });
+  document.getElementById('focus-next').addEventListener('click',()=>{
+    if(focusQuestionIndex<examQs.length-1){ focusQuestionIndex++; renderFocusQuestion(examQs, focusQuestionIndex); buildFocusDots(examQs, focusQuestionIndex); }
+  });
+}
+
+function renderFocusQuestion(qs, idx){
+  const wrap = document.getElementById('focus-question-wrap');
+  if(!wrap) return;
+  const {examId, sectionIdx, qIdx, qData} = qs[idx];
+  // Clone the question element
+  const orig = document.getElementById(`q-${examId}-${sectionIdx}-${qIdx}`);
+  if(orig){
+    wrap.innerHTML='';
+    const clone = orig.cloneNode(true);
+    clone.style.border='none';
+    clone.style.borderRadius='0';
+    clone.style.margin='0';
+    // sync inputs
+    if(qData.type==='multiple_choice'){
+      const ans = getAnswer(examId, sectionIdx, qIdx);
+      clone.querySelectorAll('.option-item').forEach(opt=>{
+        const radio = opt.querySelector('input');
+        if(radio && radio.value===ans) { radio.checked=true; opt.classList.add('selected'); }
+        radio?.addEventListener('change', ()=>{
+          saveAnswer(examId, sectionIdx, qIdx, radio.value);
+          // sync back to original
+          const origRadio = orig.querySelector(`input[value="${radio.value}"]`);
+          if(origRadio){ origRadio.checked=true; orig.querySelectorAll('.option-item').forEach(o=>o.classList.remove('selected')); origRadio.closest('.option-item')?.classList.add('selected'); }
+          updateProgress(examId); updateGlobalStats();
+          buildFocusDots(qs, idx);
+        });
+        opt.style.cursor='pointer';
+      });
+    } else if(qData.type==='true_false'){
+      const ans = getAnswer(examId, sectionIdx, qIdx);
+      clone.querySelectorAll('.btn-tf').forEach(btn=>{
+        if(btn.dataset.val===ans) btn.classList.add('selected');
+        btn.addEventListener('click',()=>{
+          clone.querySelectorAll('.btn-tf').forEach(b=>b.classList.remove('selected'));
+          btn.classList.add('selected');
+          saveAnswer(examId, sectionIdx, qIdx, btn.dataset.val);
+          const origBtns = orig.querySelectorAll('.btn-tf');
+          origBtns.forEach(b=>b.classList.remove('selected'));
+          const origBtn = orig.querySelector(`.btn-tf[data-val="${btn.dataset.val}"]`);
+          if(origBtn) origBtn.classList.add('selected');
+          updateProgress(examId); updateGlobalStats();
+          buildFocusDots(qs, idx);
+        });
+      });
+    } else if(qData.type==='fill_in_blank'){
+      const inp = clone.querySelector('.fib-input');
+      if(inp){
+        inp.addEventListener('input',()=>{
+          saveAnswer(examId, sectionIdx, qIdx, inp.value);
+          const origInp = document.getElementById(`fib-${examId}-${sectionIdx}-${qIdx}`);
+          if(origInp) origInp.value=inp.value;
+          updateProgress(examId); updateGlobalStats();
+          buildFocusDots(qs, idx);
+        });
+      }
+    } else if(qData.type==='sentence_transformation'){
+      const ta = clone.querySelector('.st-textarea');
+      if(ta){
+        ta.addEventListener('input',()=>{
+          saveAnswer(examId, sectionIdx, qIdx, ta.value);
+          const origTa = document.getElementById(`st-${examId}-${sectionIdx}-${qIdx}`);
+          if(origTa) origTa.value=ta.value;
+          updateProgress(examId); updateGlobalStats();
+          buildFocusDots(qs, idx);
+        });
+      }
+    }
+    wrap.appendChild(clone);
+  }
+
+  // Update indicator
+  document.getElementById('focus-indicator').textContent = `السؤال ${idx+1} من ${qs.length}`;
+  document.getElementById('focus-prev').disabled = idx===0;
+  document.getElementById('focus-next').disabled = idx===qs.length-1;
+}
+
+function buildFocusDots(qs, active=0){
+  const dotsWrap = document.getElementById('focus-progress-dots');
+  if(!dotsWrap) return;
+  dotsWrap.innerHTML='';
+  qs.forEach((q,i)=>{
+    const dot = document.createElement('div');
+    dot.className = 'focus-dot';
+    if(i===active) dot.classList.add('active');
+    const ans = getAnswer(q.examId, q.sectionIdx, q.qIdx);
+    if(ans && ans.trim && ans.trim() || ans && typeof ans==='string') dot.classList.add('answered');
+    dot.title = `سؤال ${i+1}`;
+    dot.addEventListener('click',()=>{ focusQuestionIndex=i; renderFocusQuestion(qs,i); buildFocusDots(qs,i); });
+    dotsWrap.appendChild(dot);
+  });
+}
+
+// ===== KEYBOARD SHORTCUTS =====
+document.addEventListener('keydown', e=>{
+  if(focusModeActive){
+    if(e.key==='Escape'){ closeFocusMode(); return; }
+    const examId = getCurrentFocusExamId();
+    const qs = allQuestions.filter(q=>q.examId===examId);
+    if(e.key==='ArrowLeft'||e.key==='ArrowDown'){
+      if(focusQuestionIndex<qs.length-1){ focusQuestionIndex++; renderFocusQuestion(qs,focusQuestionIndex); buildFocusDots(qs,focusQuestionIndex); }
+      e.preventDefault();
+    }
+    if(e.key==='ArrowRight'||e.key==='ArrowUp'){
+      if(focusQuestionIndex>0){ focusQuestionIndex--; renderFocusQuestion(qs,focusQuestionIndex); buildFocusDots(qs,focusQuestionIndex); }
+      e.preventDefault();
+    }
+    // 1-4 for MCQ
+    if(['1','2','3','4'].includes(e.key) && qs[focusQuestionIndex]){
+      const qData = qs[focusQuestionIndex].qData;
+      if(qData.type==='multiple_choice' && qData.options[parseInt(e.key)-1]){
+        const opt = qData.options[parseInt(e.key)-1];
+        const wrap = document.getElementById('focus-question-wrap');
+        const radio = wrap?.querySelector(`input[value="${opt.letter}"]`);
+        if(radio){ radio.click(); }
+      }
+    }
+    return;
+  }
+  // Global: Tab for next question (when focused on input)
+  if(e.key==='Tab' && document.activeElement){
+    // handled by browser
+  }
+  if(e.key==='Escape' && focusModeActive) closeFocusMode();
+});
+
+function getCurrentFocusExamId(){
+  const title = document.getElementById('focus-title');
+  const match = title?.textContent.match(/امتحان (\d+)/);
+  return match ? parseInt(match[1]) : EXAMS[0].id;
+}
+
+function closeFocusMode(){
+  document.getElementById('focus-overlay').classList.remove('active');
+  focusModeActive=false;
+  // remove listeners to avoid duplicates
+  const prevBtn = document.getElementById('focus-prev');
+  const nextBtn = document.getElementById('focus-next');
+  const newPrev = prevBtn.cloneNode(true);
+  const newNext = nextBtn.cloneNode(true);
+  prevBtn.parentNode.replaceChild(newPrev, prevBtn);
+  nextBtn.parentNode.replaceChild(newNext, nextBtn);
+}
+
+// ===== EVENT DELEGATION =====
+document.getElementById('content').addEventListener('click', e=>{
+  const btn = e.target.closest('[data-action]');
+  if(!btn) return;
+  const examId = parseInt(btn.dataset.exam);
+  const action = btn.dataset.action;
+  if(action==='check') checkExam(examId);
+  else if(action==='solutions') showExamSolutions(examId);
+  else if(action==='reset') resetExam(examId);
+  else if(action==='errors' || action==='errors-only') toggleErrorsOnly(examId);
+  else if(action==='focus') openFocusMode(examId);
+  else if(action==='collapse') collapseExam(examId, btn);
+});
+
+// Close focus overlay
+document.getElementById('focus-close').addEventListener('click', closeFocusMode);
+document.getElementById('focus-overlay').addEventListener('click', e=>{
+  if(e.target===document.getElementById('focus-overlay')) closeFocusMode();
+});
+
+// Global buttons
+document.getElementById('btn-show-all-solutions').addEventListener('click', toggleAllSolutions);
+document.getElementById('btn-focus-mode').addEventListener('click', ()=>{
+  openFocusMode(EXAMS[0].id);
+});
+document.getElementById('btn-review-uncertain').addEventListener('click', ()=>{
+  const panel = document.getElementById('review-panel');
+  if(panel.style.display==='block') panel.style.display='none';
+  else{ updateReviewPanel(); if(uncertainSet.size===0) showToast('<i class="fas fa-info-circle"></i> لم تضع علامة على أي سؤال بعد', ''); }
+});
+document.getElementById('btn-shortcuts').addEventListener('click', ()=>{
+  const hint = document.getElementById('shortcuts-hint');
+  hint.style.display = hint.style.display==='block' ? 'none' : 'block';
+  document.getElementById('btn-shortcuts').classList.toggle('active', hint.style.display==='block');
+});
+document.getElementById('btn-print').addEventListener('click', ()=>window.print());
+document.getElementById('btn-reset-all').addEventListener('click', ()=>{
+  if(confirm('هل أنت متأكد من إعادة تعيين جميع الامتحانات؟')){ EXAMS.forEach(e=>resetExam(e.id)); showToast('<i class="fas fa-redo"></i> تم إعادة تعيين جميع الامتحانات', 'error'); }
+});
+
+// ===== INIT =====
+function init(){
+  const content = document.getElementById('content');
+  EXAMS.forEach(exam=>{
+    const card = buildExamCard(exam);
+    content.appendChild(card);
+  });
+  // update all progress bars
+  EXAMS.forEach(exam=>updateProgress(exam.id));
+  updateGlobalStats();
+  // hide loading
+  setTimeout(()=>{
+    const loading = document.getElementById('loading');
+    loading.style.opacity='0';
+    setTimeout(()=>loading.style.display='none', 500);
+  }, 800);
+  showToast('🎓 أهلاً بك! ما تبصمج يا دولي 😄', 'gold', 4000);
+}
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
